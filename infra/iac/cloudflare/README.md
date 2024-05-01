@@ -1,6 +1,11 @@
 # Terraform for Cloudflare
 This module intended to map DNS for each group in Go workshop.
 
+## Preparation
+- Create Terraform workspace
+  - `dev` for development environment
+  - `prod` for production environment
+
 - Dev
 	- `group-1-dev`: `group-1-dev.werockstar.dev`
 	- `group-2-dev`: `group-2-dev.werockstar.dev`
