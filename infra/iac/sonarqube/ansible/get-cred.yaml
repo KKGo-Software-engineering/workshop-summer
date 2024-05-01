@@ -1,0 +1,8 @@
+-   name: Get default credential
+    become: true
+    hosts: sonarqube
+    tasks:
+        -   name: Copy default credential to local
+            fetch:
+                src: /home/bitnami/bitnami_credentials
+                dest: creds/
