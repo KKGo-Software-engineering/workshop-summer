@@ -1,3 +1,6 @@
+# Terraform for Create ArgoCD Application
+This module intended to create ArgoCD application for EKS cluster and use Terraform workspace to manage multiple environments.
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

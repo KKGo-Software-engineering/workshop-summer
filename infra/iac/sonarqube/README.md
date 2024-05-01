@@ -1,9 +1,9 @@
-## Default SonarQube Configuration
+# Terraform for SonarQube
 
+## Default Configuration
 ```shell
 sudo cat /home/bitnami/bitnami_credentials
 ```
-
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

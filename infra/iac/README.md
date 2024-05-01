@@ -1,8 +1,9 @@
 # Infrastructure as Code
 - [eks](eks/README.md) - Create EKS cluster, ArgoCD, nginx ingress controller and external-dns
 - [ArgoCD](argocd-app/README.md) - Create ArgoCD applications
-- SonarQube - Create SonarQube server and mapping DNS to SonarQube
-  - `sonarqube`: `sonarqube.werockstar.dev`
+- [SonarQube](sonarqube/README.md) - Create SonarQube server and mapping DNS to SonarQube
+  - DNS `sonarqube`: `sonarqube.werockstar.dev`
+  - We're still create project in SonarQube manually
 - Cloudflare - Create Cloudflare DNS record for all group
   - Dev
     - `group-1-dev`: `group-1-dev.werockstar.dev`
