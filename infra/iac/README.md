@@ -1,5 +1,5 @@
 # Infrastructure as Code
-- [eks](eks/README.md) - Create EKS cluster, ArgoCD, nginx ingress controller and external-dns
+- [EKS](eks/README.md) - Create EKS cluster, ArgoCD, nginx ingress controller and external-dns
 - [ArgoCD](argocd-app/README.md) - Create ArgoCD applications
 - [SonarQube](sonarqube/README.md) - Create SonarQube server and mapping DNS to SonarQube
   - DNS `sonarqube`: `sonarqube.werockstar.dev`
