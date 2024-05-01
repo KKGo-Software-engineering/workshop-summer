@@ -15,7 +15,7 @@ provider "kubernetes" {
 resource "argocd_application" "argocd_app" {
 	count = length(var.argo_apps)
 	metadata {
-		name = "${var.argo_apps[count.index]-${terraform.workspace}}"
+		name = "${var.argo_apps[count.index]}-${terraform.workspace}"
 	}
 
 	spec {
