@@ -19,7 +19,6 @@ sequenceDiagram
   activate Mobile App
   HongJot API->>PostgreSQL Database: Get Expense Summary Data
   PostgreSQL Database->>HongJot API: Return Summary Data
-  HongJot API->>Mobile App: Expense Summary Data
+  HongJot API->>Mobile App: Show Expense Summary Data
   deactivate Mobile App
-  Mobile App->>User: Show Expense Summary
 ```
