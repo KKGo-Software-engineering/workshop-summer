@@ -21,3 +21,9 @@ variable "subdomains" {
 	type        = list(string)
 	default     = ["group-0", "group-1", "group-2", "group-3", "group-4", "group-5"]
 }
+
+variable "batch_no" {
+	description = "Workshop batch number"
+	type        = string
+	default     = "b1"
+}
