@@ -108,4 +108,5 @@ func main() {
 	if err := e.Shutdown(ctx); err != nil {
 		e.Logger.Fatal(err)
 	}
+	e.Logger.Info("server shutdown gracefully")
 }
