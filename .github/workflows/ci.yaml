@@ -51,20 +51,3 @@ jobs:
                     git commit -m "[skip actions] 🤖 change dev docker image version to ${GITHUB_SHA}"
                     git pull --rebase
                     git push
-
-            -   name: change image tag to deploy hotfix
-                if: ${{ github.ref == 'refs/heads/hotfix' }}
-                run: |
-                    sed -i -E "s/ghcr.io\/kkgo-software-engineering\/workshop-summer.*$/ghcr.io\/kkgo-software-engineering\/workshop-summer:${GITHUB_SHA}/" infra/gitops/hotfix/deployment.yml
-                    git add infra/gitops/hotfix/deployment.yml
-                    git commit -m "[skip actions] 🤖 change hotfix docker image version to ${GITHUB_SHA}"
-                    git pull --rebase
-                    git push
-
-            -   name: set default docker image tag fot prd
-                run: |
-                    sed -i -E "s/default: .*/default: ${GITHUB_SHA}/" .github/workflows/prd-cd.yaml
-                    git add .github/workflows/prd-cd.yaml
-                    git commit -m "[skip actions] 🤖 change default docker tag"
-                    git pull --rebase
-                    git push
