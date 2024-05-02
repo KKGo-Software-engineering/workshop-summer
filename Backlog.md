@@ -145,7 +145,163 @@ Technical Requirements:
 - should handle any error and response appropriate error message and status code.
 
 
-<!-- hints -->
+## Some hints to help the participants get started with the workshop.
+<details>
+  <summary>Technical hints: อย่าพึ่งเปิดให้คิดเองก่อน</summary>
+1. GET /api/v1/transections
+
+- Description: Retrieves a list of all transections.
+- Response:
+- Status Code: 200 OK
+- Content Type: application/json
+- Example Payload:
+
+```json
+{
+	"transections": [
+		{
+			"id": 1,
+			"date": "2024-04-30T09:00:00.000Z",
+			"amount": 1000,
+			"category": "Food",
+			"transaction_type": "expense",
+			"note": "Lunch",
+			"image_url": "https://example.com/image1.jpg"
+		},
+		{
+			"id": 2,
+			"date": "2024-04-29T19:00:00.000Z",
+			"amount": 2000,
+			"category": "Transport",
+			"transaction_type": "income",
+			"note": "Salary",
+			"image_url": "https://example.com/image2.jpg"
+		}
+	]
+}
+```
+
+2. GET /api/v1/transections?page=1&limit=10&date=2024-04-30&amount=1000&category=Food&transaction_type=expense|income
+
+- Description: Retrieves a list of all transections with pagging and filtering.
+- Query Parameters:
+	- page: The page number to retrieve. Default is 1.
+	- limit: The number of items per page. Default is 10.
+	- date: Filter by date. Format is YYYY-MM-DD.
+	- amount: Filter by amount.
+	- category: Filter by category.
+	- transaction_type: Filter by transaction type (income or expense).
+- Response:
+- Status Code: 200 OK
+- Content Type: application/json
+- Example Payload:
+
+```json
+{
+	"transections": [
+		{
+			"id": 1,
+			"date": "2024-04-30T09:00:00.000Z",
+			"amount": 1000,
+			"category": "Food",
+			"transaction_type": "expense",
+			"note": "Lunch",
+			"image_url": "https://example.com/image1.jpg"
+		},
+		{
+			"id": 2,
+			"date": "2024-04-29T19:00:00.000Z",
+			"amount": 2000,
+			"category": "Transport",
+			"transaction_type": "income",
+			"note": "Salary",
+			"image_url": "https://example.com/image2.jpg"
+		}
+	],
+	"summary": {
+    "total_income": 2000,
+    "total_expenses": 1000,
+    "current_balance": 1000
+  },
+  "pagination": {
+    "current_page": 1,
+    "total_pages": 1,
+    "per_page": 10
+  }
+}
+```
+
+4. POST /api/v1/transections
+
+- Description: Creates a new transection so that can record the income or expense.
+- Request Body:
+- Content Type: application/json
+- Example Payload:
+
+```json
+{
+	"date": "2024-04-30T09:00:00.000Z",
+	"amount": 1000,
+	"category": "Food",
+	"transaction_type": "expense",
+	"note": "Lunch",
+	"image_url": "https://example.com/image1.jpg"
+}
+```
+
+- Response:
+- Status Code: 201 Created
+- Content Type: application/json
+- Example Payload:
+
+```json
+{
+	"id": 1,
+	"date": "2024-04-30T09:00:00.000Z",
+	"amount": 1000,
+	"category": "Food",
+	"transaction_type": "expense",
+	"note": "Lunch",
+	"image_url": "https://example.com/image1.jpg"
+}
+```
+
+5. PUT /api/v1/transections/{id}
+
+- Description: Updates an existing transection so that can edit the income or expense.
+- Request Body:
+- Content Type: application/json
+- Example Payload:
+
+```json
+{
+	"date": "2024-04-30T09:00:00.000Z",
+	"amount": 1000,
+	"category": "Food",
+	"transaction_type": "expense",
+	"note": "Lunch",
+	"image_url": "https://example.com/image1.jpg"
+}
+```
+
+- Response:
+- Status Code: 200 OK
+- Content Type: application/json
+- Example Payload:
+
+```json
+{
+	"id": 1,
+	"date": "2024-04-30T09:00:00.000Z",
+	"amount": 1000,
+	"category": "Food",
+	"transaction_type": "expense",
+	"note": "Lunch",
+	"image_url": "https://example.com/image1.jpg"
+}
+```
+
+</details>
 
 NOTE:
 - Cross-functional requirements
