@@ -39,11 +39,46 @@ func UploadToS3(c echo.Context, filename string, src multipart.File) (string, er
 }
 
 func main() {
-	// Setup
+	e := run()
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	go func() { // comment here to simulate slow endpoint then Ctrl+C to stop the server
+		if err := e.Start(":" + port); err != nil && err != http.ErrServerClosed {
+			e.Logger.Fatal("shutting down the server:", err)
+		}
+	}()
+
+	e.Logger.Infof("Server is running on :%s", port)
+
+	// Wait for interrupt signal to gracefully shutdown the server with a timeout of 10 seconds.
+	sig, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer stop()
+
+	<-sig.Done()
+
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	if err := e.Shutdown(ctx); err != nil {
+		e.Logger.Fatal(err)
+	}
+	e.Logger.Info("server shutdown gracefully")
+}
+
+func run() *echo.Echo {
 	e := echo.New()
 	e.Logger.SetLevel(log.INFO)
 
 	v1 := e.Group("/api/v1")
+	v1.GET("/slow", func(c echo.Context) error {
+		fmt.Println("simulate slow end that takes 10 seconds to respond")
+		time.Sleep(10 * time.Second)
+		return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
+	})
+
 	v1.GET("/health", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
 	})
@@ -86,27 +121,5 @@ func main() {
 		})
 	})
 
-	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
-	defer stop()
-	// Start server
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
-	go func() {
-		if err := e.Start(":" + port); err != nil && err != http.ErrServerClosed {
-			e.Logger.Fatal("shutting down the server")
-		}
-	}()
-
-	e.Logger.Infof("Server is running on :%s", port)
-	// Wait for interrupt signal to gracefully shutdown the server with a timeout of 10 seconds.
-	<-ctx.Done()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-	if err := e.Shutdown(ctx); err != nil {
-		e.Logger.Fatal(err)
-	}
-	e.Logger.Info("server shutdown gracefully")
+	return e
 }
