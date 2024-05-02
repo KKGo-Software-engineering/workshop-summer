@@ -1,37 +1,46 @@
 package main
 
 import (
-	"log"
+	"context"
 	"net/http"
 	"os"
+	"os/signal"
+	"time"
+
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/gommon/log"
 )
 
 func main() {
-	err := run()
+	// Setup
+	e := echo.New()
+	e.Logger.SetLevel(log.INFO)
 
-	if err != http.ErrServerClosed {
-		log.Fatalf("error: %v", err)
-	}
-}
-
-func run() error {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/api/v1/health", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"status": "UP"}`))
+	v1 := e.Group("/api/v1")
+	v1.GET("/health", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
 	})
 
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer stop()
+	// Start server
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
 
-	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: mux,
-	}
+	go func() {
+		if err := e.Start(":" + port); err != nil && err != http.ErrServerClosed {
+			e.Logger.Fatal("shutting down the server")
+		}
+	}()
 
-	log.Printf("Server listening on port %s", port)
-	return srv.ListenAndServe()
+	e.Logger.Infof("Server is running on :%s", port)
+	// Wait for interrupt signal to gracefully shutdown the server with a timeout of 10 seconds.
+	<-ctx.Done()
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	if err := e.Shutdown(ctx); err != nil {
+		e.Logger.Fatal(err)
+	}
 }
