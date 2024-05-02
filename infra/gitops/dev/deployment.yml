@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: workshop-summer
-          image: ghcr.io/kkgo-software-engineering/workshop-summer:1cebc337fb94b10359424a5aa2d08ffd075f979c
+          image: ghcr.io/kkgo-software-engineering/workshop-summer:d772b0bdab900ab4aba2b89f1002677c633d44ba
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
