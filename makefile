@@ -5,3 +5,8 @@ upload:
 	-H "Content-Type: multipart/form-data" \
 	-F "images=@e-slip1.png" \
 	-F "images=@e-slip2.png"
+
+.PHONY: run
+run:
+	@echo "Running the server..."
+	go run main.go
