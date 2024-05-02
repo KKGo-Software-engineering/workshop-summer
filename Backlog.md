@@ -301,6 +301,67 @@ Technical Requirements:
 }
 ```
 
+6. GET /api/v1/users/{id}/transections
+
+- Description: Retrieves a list of all transections for a specific user.
+- Response:
+- Status Code: 200 OK
+- Content Type: application/json
+- Example Payload:
+
+```json
+{
+	"transections": [
+		{
+			"id": 1,
+			"date": "2024-04-30T09:00:00.000Z",
+			"amount": 1000,
+			"category": "Food",
+			"transaction_type": "expense",
+			"note": "Lunch",
+			"image_url": "https://example.com/image1.jpg"
+		},
+		{
+			"id": 2,
+			"date": "2024-04-29T19:00:00.000Z",
+			"amount": 2000,
+			"category": "Transport",
+			"transaction_type": "income",
+			"note": "Salary",
+			"image_url": "https://example.com/image2.jpg"
+		}
+	],
+	"summary": {
+		"total_income": 2000,
+		"total_expenses": 1000,
+		"current_balance": 1000
+	},
+	"pagination": {
+		"current_page": 1,
+		"total_pages": 1,
+		"per_page": 10
+	}
+}
+```
+
+7. GET /api/v1/users/{id}/transections/summary
+
+- Description: Retrieves a summary of all transections for a specific user.
+- Response:
+- Status Code: 200 OK
+- Content Type: application/json
+- Example Payload:
+
+```json
+{
+	"summary": {
+		"total_income": 2000,
+		"total_expenses": 1000,
+		"current_balance": 1000
+	}
+}
+```
+
 </details>
 
 NOTE:
