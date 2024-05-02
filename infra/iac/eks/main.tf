@@ -1,6 +1,7 @@
 resource "aws_eks_cluster" "eks-cluster" {
 	name     = var.cluster_name
 	role_arn = aws_iam_role.eks_iam.arn
+	version = "1.29"
 
 	vpc_config {
 		subnet_ids = [
@@ -11,6 +12,9 @@ resource "aws_eks_cluster" "eks-cluster" {
 		]
 	}
 
+	timeouts {
+		delete = "30m"
+	}
 	depends_on = [aws_iam_role_policy_attachment.eks_iam-AmazonEKSClusterPolicy]
 }
 
@@ -41,7 +45,7 @@ resource "kubernetes_namespace" "nginx_ingress" {
 		name = var.ingress_namespace
 	}
 
-	depends_on = [aws_eks_cluster.eks-cluster]
+	depends_on = [aws_eks_node_group.private-nodes]
 }
 
 resource "helm_release" "nginx_ingress" {
@@ -60,7 +64,7 @@ resource "kubernetes_namespace" "argocd" {
 	metadata {
 		name = var.argocd_namespace
 	}
-	depends_on = [aws_eks_cluster.eks-cluster]
+	depends_on = [aws_eks_node_group.private-nodes]
 }
 
 resource "helm_release" "argocd" {
