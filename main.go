@@ -38,6 +38,44 @@ func UploadToS3(c echo.Context, filename string, src multipart.File) (string, er
 	// return result.Location, nil
 }
 
+func UploadESlip(c echo.Context) error {
+	form, err := c.MultipartForm()
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"message": "Failed to parse form",
+			"error":   err.Error(),
+		})
+	}
+	images := form.File["images"]
+	var locations []string
+	for _, image := range images {
+		fmt.Printf("Uploading file: %+v\n", image.Filename)
+		src, err := image.Open()
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, map[string]string{
+				"message": "Failed to parse form",
+				"error":   err.Error(),
+			})
+		}
+		defer src.Close()
+
+		// upload to AWS S3 bucket
+		loc, err := UploadToS3(c, image.Filename, src)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, map[string]string{
+				"message": "Failed to upload image",
+				"error":   err.Error(),
+			})
+		}
+		locations = append(locations, loc)
+	}
+
+	return c.JSON(http.StatusOK, map[string]string{
+		"message":   "Image uploaded successfully",
+		"locations": strings.Join(locations, ","),
+	})
+}
+
 func main() {
 	e := run()
 
@@ -83,43 +121,7 @@ func run() *echo.Echo {
 		return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
 	})
 
-	v1.POST("/upload", func(c echo.Context) error {
-		form, err := c.MultipartForm()
-		if err != nil {
-			return c.JSON(http.StatusBadRequest, map[string]string{
-				"message": "Failed to parse form",
-				"error":   err.Error(),
-			})
-		}
-		images := form.File["images"]
-		var locations []string
-		for _, image := range images {
-			fmt.Printf("Uploading file: %+v\n", image.Filename)
-			src, err := image.Open()
-			if err != nil {
-				return c.JSON(http.StatusBadRequest, map[string]string{
-					"message": "Failed to parse form",
-					"error":   err.Error(),
-				})
-			}
-			defer src.Close()
-
-			// upload to AWS S3 bucket
-			loc, err := UploadToS3(c, image.Filename, src)
-			if err != nil {
-				return c.JSON(http.StatusInternalServerError, map[string]string{
-					"message": "Failed to upload image",
-					"error":   err.Error(),
-				})
-			}
-			locations = append(locations, loc)
-		}
-
-		return c.JSON(http.StatusOK, map[string]string{
-			"message":   "Image uploaded successfully",
-			"locations": strings.Join(locations, ","),
-		})
-	})
+	v1.POST("/upload", UploadESlip)
 
 	return e
 }
