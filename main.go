@@ -106,21 +106,24 @@ func main() {
 	e.Logger.Info("server shutdown gracefully")
 }
 
+func Slow(c echo.Context) error {
+	fmt.Println("simulate slow end that takes 10 seconds to respond")
+	time.Sleep(10 * time.Second)
+	return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
+}
+
+func Health(c echo.Context) error {
+	return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
+}
+
 func run() *echo.Echo {
 	e := echo.New()
 	e.Logger.SetLevel(log.INFO)
 
 	v1 := e.Group("/api/v1")
-	v1.GET("/slow", func(c echo.Context) error {
-		fmt.Println("simulate slow end that takes 10 seconds to respond")
-		time.Sleep(10 * time.Second)
-		return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
-	})
 
-	v1.GET("/health", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
-	})
-
+	v1.GET("/slow", Slow)
+	v1.GET("/health", Health)
 	v1.POST("/upload", UploadESlip)
 
 	return e

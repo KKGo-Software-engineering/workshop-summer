@@ -15,3 +15,8 @@ run:
 slow:
 	@echo "Running the server with slow response..."
 	curl http://localhost:8080/api/v1/slow
+
+.PHONY: health
+health:
+	@echo "Checking the health of the server..."
+	curl http://localhost:8080/api/v1/health
