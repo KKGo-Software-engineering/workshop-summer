@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"mime/multipart"
 	"net/http"
@@ -12,6 +13,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
+	_ "github.com/proullon/ramsql/driver"
 )
 
 func UploadToS3(c echo.Context, filename string, src multipart.File) (string, error) {
@@ -77,7 +79,24 @@ func UploadESlip(c echo.Context) error {
 }
 
 func main() {
-	e := run()
+	// inmemory db ramql
+	db, err := sql.Open("ramsql", "TestGormQuickStart")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// create table
+	_, err = db.Exec(`CREATE TABLE users (
+			id SERIAL PRIMARY KEY,
+			name VARCHAR(50) NOT NULL,
+			email VARCHAR(50) NOT NULL
+		)`)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	e := run(db)
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -116,7 +135,13 @@ func Health(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
 }
 
-func run() *echo.Echo {
+func GetAllUsers(db *sql.DB) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		return c.JSON(http.StatusOK, map[string]string{"message": "get all users"})
+	}
+}
+
+func run(db *sql.DB) *echo.Echo {
 	e := echo.New()
 	e.Logger.SetLevel(log.INFO)
 
@@ -125,6 +150,7 @@ func run() *echo.Echo {
 	v1.GET("/slow", Slow)
 	v1.GET("/health", Health)
 	v1.POST("/upload", UploadESlip)
+	v1.GET("/users", GetAllUsers(db))
 
 	return e
 }
