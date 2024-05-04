@@ -12,11 +12,15 @@ on:
                 required: true
                 type: boolean
             deploy-tag:
-                description: '🎯 Deploy docker tag'
+                description: '🎯 Deploy Docker tag'
                 required: true
                 type: string
                 default: c9f6b38c1acd0a7153e42a03b577757262075eb3
-
+            deploy-message:
+                description: '🚀 Deploy message'
+                required: true
+                type: string
+                default: I'm inevitable
 jobs:
     gitops-prd-versioning:
         name: GitOps Prod Versioning
@@ -40,6 +44,6 @@ jobs:
                 run: |
                     sed -i -E "s/werockstar\/workshop-summer.*$/werockstar:${GITHUB_SHA}/" infra/gitops/prod/deployment.yml
                     git add infra/gitops/prod/deployment.yml
-                    git commit -m "[skip actions] 🤖 change prd docker image version to ${{ inputs.deploy-tag }}"
+                    git commit -m "[skip actions] ship it to prod 🚀 with ${{ inputs.deploy-message }}"
                     git pull --rebase
                     git push
