@@ -1,18 +1,21 @@
+# Low cost instance
 resource "aws_db_instance" "postgres" {
-	allocated_storage       = 20
-	storage_type            = "gp2"
-	engine                  = "postgres"
-	engine_version          = "16.1"
-	instance_class          = "db.t3.micro"
-	identifier              = "database-workshop"
-	username                = var.db_username
-	password                = var.db_password
-	db_name                 = var.db_name
-	multi_az                = false
-	skip_final_snapshot     = false
-	vpc_security_group_ids  = [aws_security_group.db-sg.id]
-	backup_retention_period = 7
-	parameter_group_name    = "default.postgres16"
+	allocated_storage            = 20
+	storage_type                 = "gp2"
+	engine                       = "postgres"
+	engine_version               = "16.1"
+	instance_class               = "db.t3.micro"
+	identifier                   = "database-workshop"
+	username                     = var.db_username
+	password                     = var.db_password
+	db_name                      = var.db_name
+	multi_az                     = false
+	skip_final_snapshot          = false
+	vpc_security_group_ids       = [aws_security_group.db-sg.id]
+	backup_retention_period      = 7
+	parameter_group_name         = "default.postgres16"
+	performance_insights_enabled = true
+	performance_insights_retention_period = 7
 
 	tags = {
 		Name = "database-workshop"
