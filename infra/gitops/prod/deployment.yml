@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api
+  name: group-0-prod-deployment
   namespace: group-0-prod
 spec:
   selector:
