@@ -1,17 +1,17 @@
 variable "db_password" {
-	type      = string
-	sensitive = true
-	default   = "password for db"
+	type        = string
+	sensitive   = true
+	description = "password for db"
 }
 
 variable "db_username" {
-	type      = string
-	default   = "username for db"
-	sensitive = true
+	type        = string
+	description = "username for db"
+	sensitive   = true
 }
 
 variable "db_name" {
-	type    = string
-	default = "workshop"
+	type        = string
+	default     = "workshop"
 	description = "database name"
 }
