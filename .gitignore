@@ -3,3 +3,4 @@
 **/*.tfstate*
 infra/iac/sonarqube/ansible/creds/*
 **/inventories/sonarqube.ini
+**/.infracost

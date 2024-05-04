@@ -46,6 +46,10 @@ resource "kubernetes_namespace" "nginx_ingress" {
 	}
 
 	depends_on = [aws_eks_node_group.private-nodes]
+
+	timeouts {
+		delete = "10m"
+	}
 }
 
 resource "helm_release" "nginx_ingress" {
@@ -65,6 +69,9 @@ resource "kubernetes_namespace" "argocd" {
 		name = var.argocd_namespace
 	}
 	depends_on = [aws_eks_node_group.private-nodes]
+	timeouts {
+		delete = "10m"
+	}
 }
 
 resource "helm_release" "argocd" {
