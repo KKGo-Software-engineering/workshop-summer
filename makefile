@@ -3,6 +3,10 @@ test:
 	@echo "Running tests..."
 	go test -v ./...
 
+PHONY: test-it
+test-it:
+	@echo "Running integration tests..."
+	go test -v -run "Test.*IT" -tags=integration ./...
 
 PHONY: upload
 upload:

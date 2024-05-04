@@ -362,6 +362,70 @@ Technical Requirements:
 }
 ```
 
+8. GET /api/v1/users
+
+- Description: Retrieves a list of all users.
+- Response:
+- Status Code: 200 OK
+- Content Type: application/json
+- Example Payload:
+
+```json
+{
+	"users": [
+		{
+			"id": 1,
+			"name": "John Doe",
+			"email": "hong@jot.ok"
+		}
+	]
+}
+```
+
+9 GET /api/v1/users/{id}
+
+- Description: Retrieves a specific user.
+- Response:
+- Status Code: 200 OK
+- Content Type: application/json
+- Example Payload:
+
+```json
+{
+	"id": 1,
+	"name": "John Doe",
+	"email": "hong@jot.ok"
+}
+```
+
+10. POST /api/v1/users
+
+- Description: Creates a new user.
+- Request Body:
+- Content Type: application/json
+- Example Payload:
+
+```json
+{
+	"name": "John Doe",
+	"email": "hong@jot.ok"
+}
+```
+
+- Response:
+- Status Code: 201 Created
+- Content Type: application/json
+- Example Payload:
+
+```json
+{
+	"id": 1,
+	"name": "John Doe",
+	"email": "hong@jot.ok"
+}
+```
+
+
 </details>
 
 NOTE:
