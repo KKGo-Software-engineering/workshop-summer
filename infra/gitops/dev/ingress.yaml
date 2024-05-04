@@ -15,6 +15,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: group-0-dev-deployment
+            name: group-0-dev-service
             port:
               number: 80
