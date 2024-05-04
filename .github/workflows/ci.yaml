@@ -24,7 +24,7 @@ jobs:
                 uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
                 with:
                     push: ${{ github.ref == 'refs/heads/main' }}
-                    tags: ${{ secrets.DOCKER_USER }}/kkgo-software-engineering/workshop-summer:${{ env.GITHUB_SHA }}
+                    tags: "${{ secrets.DOCKER_USER }}/kkgo-software-engineering/workshop-summer:${{ env.GITHUB_SHA }}"
 #                    tags: ghcr.io/kkgo-software-engineering/workshop-summer:${{ env.GITHUB_SHA }}
 
             -   name: Image digest
