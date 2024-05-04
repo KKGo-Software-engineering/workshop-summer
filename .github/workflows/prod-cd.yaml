@@ -19,6 +19,7 @@ on:
 
 jobs:
     gitops-prd-versioning:
+        name: GitOps Prod Versioning
         runs-on: ubuntu-latest
         steps:
             -   name: verify manual input
