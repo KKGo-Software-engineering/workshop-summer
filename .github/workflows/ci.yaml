@@ -3,8 +3,34 @@ name: Go CI
 on:
     push:
         branches: [ main ]
+env:
+    PROJECT_NAME: workshop-summer
 
 jobs:
+    sonarqube:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+            -   name: SonarQube Scan
+                uses: sonarsource/sonarqube-scan-action@master
+                env:
+                    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                    SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+                with:
+                    projectBaseDir: .
+                    args: >
+                        -Dsonar.go.coverage.reportPaths=coverage.out
+                        -Dsonar.language=go
+                        -Dsonar.sources=.
+                        -Dsonar.projectKey=${{ env.PROJECT_NAME }}
+            - uses: sonarsource/sonarqube-quality-gate-action@master
+              timeout-minutes: 5
+              env:
+                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
     build-and-push-docker-image:
         name: Build docker image and push to repositories
         runs-on: ubuntu-latest
@@ -24,7 +50,7 @@ jobs:
                 uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
                 with:
                     push: ${{ github.ref == 'refs/heads/main' }}
-                    tags: "${{ secrets.DOCKER_USER }}/workshop-summer:${{ env.GITHUB_SHA }}"
+                    tags: "${{ secrets.DOCKER_USER }}/${{ env.PROJECT_NAME }}:${{ env.GITHUB_SHA }}"
 #                    tags: ghcr.io/kkgo-software-engineering/workshop-summer:${{ env.GITHUB_SHA }}
 
             -   name: Image digest
