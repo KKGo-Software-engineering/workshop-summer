@@ -42,7 +42,7 @@ jobs:
 
             -   name: change image tag
                 run: |
-                    sed -i -E "s/werockstar\/workshop-summer.*$/werockstar:${GITHUB_SHA}/" infra/gitops/prod/deployment.yml
+                    sed -i -E "s/werockstar\/workshop-summer.*$/werockstar\/workshop-summer:${GITHUB_SHA}/" infra/gitops/prod/deployment.yml
                     git add infra/gitops/prod/deployment.yml
                     git commit -m "[skip actions] ship it to prod 🚀 with ${{ inputs.deploy-message }}"
                     git pull --rebase
