@@ -37,7 +37,7 @@ jobs:
 
             -   name: change image tag
                 run: |
-                    sed -i -E "s/werockstar\/workshop-summer.*$/ghcr.io\/werockstar:${GITHUB_SHA}/" infra/gitops/prod/deployment.yml
+                    sed -i -E "s/werockstar\/workshop-summer.*$/werockstar:${GITHUB_SHA}/" infra/gitops/prod/deployment.yml
                      git add infra/gitops/prod/deployment.yml
                      git commit -m "[skip actions] 🤖 change prd docker image version to ${{ inputs.deploy-tag }}"
                      git pull --rebase
