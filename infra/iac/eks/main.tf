@@ -48,7 +48,7 @@ resource "kubernetes_namespace" "nginx_ingress" {
 	depends_on = [aws_eks_node_group.private-nodes]
 
 	timeouts {
-		delete = "10m"
+		delete = "5m"
 	}
 }
 
@@ -68,9 +68,10 @@ resource "kubernetes_namespace" "argocd" {
 	metadata {
 		name = var.argocd_namespace
 	}
-	depends_on = [aws_eks_node_group.private-nodes]
+	depends_on = [helm_release.nginx_ingress]
+
 	timeouts {
-		delete = "10m"
+		delete = "5m"
 	}
 }
 
@@ -90,7 +91,7 @@ resource "null_resource" "ingress" {
 	provisioner "local-exec" {
 		command = "kubectl apply -f argocd-ingress.yaml"
 	}
-	depends_on = [helm_release.argocd]
+	depends_on = [helm_release.argocd, helm_release.nginx_ingress]
 }
 
 data "kubernetes_service" "service" {

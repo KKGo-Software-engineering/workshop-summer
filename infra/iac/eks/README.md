@@ -27,6 +27,41 @@ kubectl -n ingress-nginx edit deployment.apps/ingress-nginx-controller
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 ```
 
+## ArgoCD Users
+```sh
+
+# create configmap file from argocd-cm
+kubectl get configmap argocd-cm -n argocd -o yaml > argocd-cm.yml
+
+# edit argocd-cm.yml
+data:
+ accounts.<ACCOUNT_NAME>: apiKey, login
+
+# apply configmap
+kubectl apply -f argocd-cm.yml -n argocd
+
+# Set RBAC for the user
+kubectl get configmap argocd-rbac-cm -n argocd -o yaml > argocd-rbac-cm.yml
+
+# edit argocd-rbac-cm.yml
+data:
+  policy.csv: |
+    g, <ACCOUNT_NAME>, role:admin
+
+# apply configmap
+kubectl apply -f argocd-rbac-cm.yml -n argocd
+
+# login with argogo login
+argocd login <ARGOCD_SERVER> --username <ACCOUNT_NAME> --password <PASSWORD>
+
+# create password for new user
+argocd account update-password --account <NEW_ACCOUNT_NAME> --current-password <ADMIN_PASSWORD> --new-password <NEW_PASSWORD>
+
+# disable admin user if needed in argocd-cm.yml
+data:
+  admin.enabled: "false"
+```
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
