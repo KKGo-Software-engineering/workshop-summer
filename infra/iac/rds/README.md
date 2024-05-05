@@ -34,5 +34,7 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_database_endpoint"></a> [database\_endpoint](#output\_database\_endpoint) | n/a |
 <!-- END_TF_DOCS -->
