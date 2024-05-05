@@ -50,7 +50,7 @@ func (h handler) Create(c echo.Context) error {
 	err = h.db.QueryRowContext(ctx, cStmt, ur.Name, ur.Email).Scan(&lastInsertId)
 	if err != nil {
 		logger.Error("query row error", zap.Error(err))
-		return err
+		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
 	logger.Info("create successfully", zap.Int64("id", lastInsertId))
