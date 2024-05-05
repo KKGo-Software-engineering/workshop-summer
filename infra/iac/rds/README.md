@@ -37,4 +37,6 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_database_endpoint"></a> [database\_endpoint](#output\_database\_endpoint) | n/a |
+| <a name="output_database_name"></a> [database\_name](#output\_database\_name) | n/a |
+| <a name="output_database_port"></a> [database\_port](#output\_database\_port) | n/a |
 <!-- END_TF_DOCS -->
