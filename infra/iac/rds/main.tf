@@ -11,6 +11,7 @@ resource "aws_db_instance" "postgres" {
 	db_name                               = var.db_name
 	multi_az                              = false
 	skip_final_snapshot                   = false
+	final_snapshot_identifier             = "database-workshop-snapshot"
 	vpc_security_group_ids                = [aws_security_group.db-sg.id]
 	backup_retention_period               = 7
 	parameter_group_name                  = "default.postgres16"
@@ -25,6 +26,14 @@ resource "aws_db_instance" "postgres" {
 
 output "database_endpoint" {
 	value = aws_db_instance.postgres.endpoint
+}
+
+output "database_port" {
+	value = aws_db_instance.postgres.port
+}
+
+output "database_name" {
+	value = aws_db_instance.postgres.db_name
 }
 
 data "aws_vpc" "default" {
