@@ -7,6 +7,29 @@ env:
     PROJECT_NAME: workshop-summer
 
 jobs:
+    unit-test:
+        name: Unit Test
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v4
+            -   name: Set up Go
+                uses: actions/setup-go@v2
+                with:
+                    go-version: 1.21.9
+            -   name: Run Unit Test
+                run: go test -v ./... -coverprofile=coverage.out
+    integration-test:
+        name: Integration Test
+        runs-on: ubuntu-latest
+        needs: unit-test
+        steps:
+            -   uses: actions/checkout@v4
+            -   name: Set up Go
+                uses: actions/setup-go@v2
+                with:
+                    go-version: 1.21.9
+            -   name: Run Integration Test
+                run: make test-it
     sonarqube:
         name: SonarQube Scan
         runs-on: ubuntu-latest
@@ -26,16 +49,16 @@ jobs:
                         -Dsonar.language=go
                         -Dsonar.sources=.
                         -Dsonar.projectKey=${{ env.PROJECT_NAME }}
-            - uses: sonarsource/sonarqube-quality-gate-action@master
-              timeout-minutes: 5
-              env:
-                SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-                SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+            -   uses: sonarsource/sonarqube-quality-gate-action@master
+                timeout-minutes: 5
+                env:
+                    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                    SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
     build-and-push-docker-image:
         name: Build Image and Push to Registry
         runs-on: ubuntu-latest
-        needs: sonarqube
+        needs: [ unit-test, sonarqube ]
         steps:
             -   uses: actions/checkout@v4
             -   name: Setup SHA
@@ -44,7 +67,7 @@ jobs:
             -   name: Login Registry
                 uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
                 with:
-#                    registry: ghcr.io
+                    #                    registry: ghcr.io
                     username: ${{ secrets.DOCKER_USER }}
                     password: ${{ secrets.DOCKER_TOKEN }}
 
@@ -53,7 +76,7 @@ jobs:
                 with:
                     push: ${{ github.ref == 'refs/heads/main' }}
                     tags: "${{ secrets.DOCKER_USER }}/${{ env.PROJECT_NAME }}:${{ env.GITHUB_SHA }}"
-#                    tags: ghcr.io/kkgo-software-engineering/workshop-summer:${{ env.GITHUB_SHA }}
+            #                    tags: ghcr.io/kkgo-software-engineering/workshop-summer:${{ env.GITHUB_SHA }}
 
             -   name: Image digest
                 run: echo ${{ steps.docker_build.outputs.digest }}
