@@ -4,6 +4,7 @@ go 1.21.9
 
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.2
+	github.com/caarlos0/env/v10 v10.0.0
 	github.com/kkgo-software-engineering/workshop v0.0.0-20230120144840-066b8bb26aca
 	github.com/labstack/echo/v4 v4.12.0
 	github.com/labstack/gommon v0.4.2

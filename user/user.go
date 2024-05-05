@@ -29,7 +29,7 @@ func New(cfg FeatureFlag, db *sql.DB) *handler {
 }
 
 const (
-	cStmt = "INSERT INTO users (name, email) VALUES ($1, $2) RETURNING id;"
+	cStmt = `INSERT INTO "user" (name, email) VALUES ($1, $2) RETURNING id;`
 )
 
 func (h handler) Create(c echo.Context) error {

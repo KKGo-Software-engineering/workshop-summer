@@ -1,0 +1,22 @@
+# Stage 1: Build dependencies (cache based on go.mod/go.sum)
+FROM golang:1.21.9-alpine AS builder
+
+# Set working directory
+WORKDIR /go/src
+
+# Copy go.mod and go.sum (triggers cache invalidation)
+COPY go.mod go.sum ./
+
+# Download and install dependencies
+RUN CGO_ENABLED=0 go mod download
+
+# Stage 2: Application runtime (uses cached dependencies)
+FROM golang:1.21.9-alpine
+
+COPY --from=builder /go/pkg /go/pkg
+
+# Set working directory
+WORKDIR /go/src
+
+# Run tests
+CMD CGO_ENABLED=0 go test -v -run "Test.*IT" -tags=integration ./...

@@ -8,6 +8,11 @@ test-it:
 	@echo "Running integration tests..."
 	go test -v -run "Test.*IT" -tags=integration ./...
 
+PHONY: test-it-docker
+test-it-docker:
+	docker-compose -f docker-compose.it.test.yaml down && \
+	docker-compose -f docker-compose.it.test.yaml up --build --force-recreate --abort-on-container-exit --exit-code-from it_tests
+
 PHONY: upload
 upload:
 	@echo "Uploading images..."

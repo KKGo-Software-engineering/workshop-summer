@@ -1,0 +1,37 @@
+networks:
+  integration-test:
+
+services:
+  it_tests:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.it
+    environment:
+      - DOCKER_DATABASE_USERNAME=postgres
+      - DOCKER_DATABASE_PASSWORD=password
+      - DOCKER_DATABASE_HOST=db
+      - DOCKER_DATABASE_NAME=hongjot
+    volumes:
+      - $PWD:/go/src
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - integration-test
+
+  db:
+    image: postgres:12.12
+    user: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: hongjot
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - integration-test
