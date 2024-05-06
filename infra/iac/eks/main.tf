@@ -51,6 +51,8 @@ resource "helm_release" "nginx_ingress" {
 	repository = "https://kubernetes.github.io/ingress-nginx"
 	chart      = "ingress-nginx"
 	version    = "v4.10.1"
+
+	values = [file("values/nginx.yaml")]
 }
 
 resource "helm_release" "argocd" {
@@ -64,8 +66,7 @@ resource "helm_release" "argocd" {
 	chart      = "argo-cd"
 	version    = "6.7.17"
 
-	values = [
-	]
+	depends_on = [helm_release.nginx_ingress]
 }
 
 resource "null_resource" "ingress" {
