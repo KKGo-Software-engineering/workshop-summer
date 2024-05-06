@@ -1,7 +1,7 @@
 resource "aws_eks_cluster" "eks-cluster" {
 	name     = var.cluster_name
 	role_arn = aws_iam_role.eks_iam.arn
-	version = "1.29"
+	version  = "1.29"
 
 	vpc_config {
 		subnet_ids = [
@@ -40,22 +40,11 @@ provider "helm" {
 	}
 }
 
-resource "kubernetes_namespace" "nginx_ingress" {
-	metadata {
-		name = var.ingress_namespace
-	}
-
-	depends_on = [aws_eks_node_group.private-nodes]
-
-	timeouts {
-		delete = "5m"
-	}
-}
-
 resource "helm_release" "nginx_ingress" {
-	namespace = kubernetes_namespace.nginx_ingress.metadata[0].name
-	wait      = true
-	timeout   = 600
+	namespace        = var.ingress_namespace
+	wait             = true
+	timeout          = 600
+	create_namespace = true
 
 	name = "ingress-nginx"
 
@@ -64,27 +53,19 @@ resource "helm_release" "nginx_ingress" {
 	version    = "v4.10.1"
 }
 
-resource "kubernetes_namespace" "argocd" {
-	metadata {
-		name = var.argocd_namespace
-	}
-	depends_on = [helm_release.nginx_ingress]
-
-	timeouts {
-		delete = "5m"
-	}
-}
-
 resource "helm_release" "argocd" {
-	namespace = kubernetes_namespace.argocd.metadata[0].name
-	wait      = true
-	timeout   = 600
-
-	name = "argocd"
+	name             = "argocd"
+	namespace        = var.argocd_namespace
+	wait             = true
+	timeout          = 600
+	create_namespace = true
 
 	repository = "https://argoproj.github.io/argo-helm"
 	chart      = "argo-cd"
 	version    = "6.7.17"
+
+	values = [
+	]
 }
 
 resource "null_resource" "ingress" {
@@ -96,7 +77,7 @@ resource "null_resource" "ingress" {
 
 data "kubernetes_service" "service" {
 	metadata {
-		name = "ingress-nginx-controller"
+		name      = "ingress-nginx-controller"
 		namespace = "ingress-nginx"
 	}
 	depends_on = [null_resource.ingress]
