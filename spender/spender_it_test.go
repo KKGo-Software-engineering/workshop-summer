@@ -16,7 +16,6 @@ import (
 )
 
 func TestCreateSpenderIT(t *testing.T) {
-
 	t.Run("create spender succesfully when feature toggle is enable", func(t *testing.T) {
 		cfg := config.C("DOCKER")
 		sql, err := sql.Open("postgres", cfg.DBURL())
@@ -38,6 +37,30 @@ func TestCreateSpenderIT(t *testing.T) {
 		e.ServeHTTP(rec, req)
 
 		assert.Equal(t, http.StatusCreated, rec.Code)
+		assert.NotEmpty(t, rec.Body.String())
+	})
+}
+
+func TestGetAllSpenderIT(t *testing.T) {
+	t.Run("get all spender successfully", func(t *testing.T) {
+		cfg := config.C("DOCKER")
+		sql, err := sql.Open("postgres", cfg.DBURL())
+		if err != nil {
+			t.Error(err)
+		}
+
+		h := New(FeatureFlag{}, sql)
+		e := echo.New()
+		defer e.Close()
+
+		e.GET("/spenders", h.GetAll)
+
+		req := httptest.NewRequest(http.MethodGet, "/spenders", nil)
+		rec := httptest.NewRecorder()
+
+		e.ServeHTTP(rec, req)
+
+		assert.Equal(t, http.StatusOK, rec.Code)
 		assert.NotEmpty(t, rec.Body.String())
 	})
 }

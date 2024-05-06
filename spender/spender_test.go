@@ -96,4 +96,49 @@ func TestCreateSpender(t *testing.T) {
 	})
 }
 
-func TestGetAllSpender(t *testing.T) {}
+func TestGetAllSpender(t *testing.T) {
+	t.Run("get all spender succesfully", func(t *testing.T) {
+		e := echo.New()
+		defer e.Close()
+
+		req := httptest.NewRequest(http.MethodGet, "/", nil)
+		rec := httptest.NewRecorder()
+		c := e.NewContext(req, rec)
+
+		db, mock, _ := sqlmock.New(sqlmock.QueryMatcherOption(sqlmock.QueryMatcherEqual))
+		defer db.Close()
+
+		rows := sqlmock.NewRows([]string{"id", "name", "email"}).
+			AddRow(1, "HongJot", "hong@jot.ok").
+			AddRow(2, "JotHong", "jot@jot.ok")
+		mock.ExpectQuery(`SELECT id, name, email FROM spender`).WillReturnRows(rows)
+
+		h := New(FeatureFlag{}, db)
+		err := h.GetAll(c)
+
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusOK, rec.Code)
+		assert.JSONEq(t, `[{"id": 1, "name": "HongJot", "email": "hong@jot.ok"},
+		{"id": 2, "name": "JotHong", "email": "jot@jot.ok"}]`, rec.Body.String())
+	})
+
+	t.Run("get all spender failed on database", func(t *testing.T) {
+		e := echo.New()
+		defer e.Close()
+
+		req := httptest.NewRequest(http.MethodGet, "/", nil)
+		rec := httptest.NewRecorder()
+		c := e.NewContext(req, rec)
+
+		db, mock, _ := sqlmock.New(sqlmock.QueryMatcherOption(sqlmock.QueryMatcherEqual))
+		defer db.Close()
+
+		mock.ExpectQuery(`SELECT id, name, email FROM spender`).WillReturnError(assert.AnError)
+
+		h := New(FeatureFlag{}, db)
+		err := h.GetAll(c)
+
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusInternalServerError, rec.Code)
+	})
+}
