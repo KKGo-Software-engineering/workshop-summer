@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/KKGo-Software-engineering/workshop-summer/config"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 )
@@ -27,7 +28,7 @@ func TestCreateSpender(t *testing.T) {
 
 		row := sqlmock.NewRows([]string{"id"}).AddRow(1)
 		mock.ExpectQuery(cStmt).WithArgs("HongJot", "hong@jot.ok").WillReturnRows(row)
-		cfg := FeatureFlag{EnableCreateSpender: true}
+		cfg := config.FeatureFlag{EnableCreateSpender: true}
 
 		h := New(cfg, db)
 		err := h.Create(c)
@@ -46,7 +47,7 @@ func TestCreateSpender(t *testing.T) {
 		rec := httptest.NewRecorder()
 		c := e.NewContext(req, rec)
 
-		cfg := FeatureFlag{EnableCreateSpender: false}
+		cfg := config.FeatureFlag{EnableCreateSpender: false}
 
 		h := New(cfg, nil)
 		err := h.Create(c)
@@ -63,7 +64,7 @@ func TestCreateSpender(t *testing.T) {
 		req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 		rec := httptest.NewRecorder()
 		c := e.NewContext(req, rec)
-		cfg := FeatureFlag{EnableCreateSpender: true}
+		cfg := config.FeatureFlag{EnableCreateSpender: true}
 
 		h := New(cfg, nil)
 		err := h.Create(c)
@@ -86,7 +87,7 @@ func TestCreateSpender(t *testing.T) {
 		defer db.Close()
 
 		mock.ExpectQuery(cStmt).WithArgs("HongJot", "hong@jot.ok").WillReturnError(assert.AnError)
-		cfg := FeatureFlag{EnableCreateSpender: true}
+		cfg := config.FeatureFlag{EnableCreateSpender: true}
 
 		h := New(cfg, db)
 		err := h.Create(c)
@@ -113,7 +114,7 @@ func TestGetAllSpender(t *testing.T) {
 			AddRow(2, "JotHong", "jot@jot.ok")
 		mock.ExpectQuery(`SELECT id, name, email FROM spender`).WillReturnRows(rows)
 
-		h := New(FeatureFlag{}, db)
+		h := New(config.FeatureFlag{}, db)
 		err := h.GetAll(c)
 
 		assert.NoError(t, err)
@@ -135,7 +136,7 @@ func TestGetAllSpender(t *testing.T) {
 
 		mock.ExpectQuery(`SELECT id, name, email FROM spender`).WillReturnError(assert.AnError)
 
-		h := New(FeatureFlag{}, db)
+		h := New(config.FeatureFlag{}, db)
 		err := h.GetAll(c)
 
 		assert.NoError(t, err)

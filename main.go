@@ -11,6 +11,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/KKGo-Software-engineering/workshop-summer/config"
+	"github.com/KKGo-Software-engineering/workshop-summer/spender"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
 	_ "github.com/proullon/ramsql/driver"
@@ -135,22 +137,24 @@ func Health(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
 }
 
-func GetAllSpenders(db *sql.DB) echo.HandlerFunc {
-	return func(c echo.Context) error {
-		return c.JSON(http.StatusOK, map[string]string{"message": "get all spenders"})
-	}
-}
-
 func run(db *sql.DB) *echo.Echo {
 	e := echo.New()
 	e.Logger.SetLevel(log.INFO)
+
+	env := config.Env("ENV")
+	cfg := config.C(env)
 
 	v1 := e.Group("/api/v1")
 
 	v1.GET("/slow", Slow)
 	v1.GET("/health", Health)
 	v1.POST("/upload", UploadESlip)
-	v1.GET("/spenders", GetAllSpenders(db))
+
+	{
+		h := spender.New(cfg.FeatureFlag, db)
+		v1.GET("/spenders", h.GetAll)
+		v1.POST("/spenders", h.Create)
+	}
 
 	return e
 }

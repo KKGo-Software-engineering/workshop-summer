@@ -23,7 +23,7 @@ func TestCreateSpenderIT(t *testing.T) {
 			t.Error(err)
 		}
 
-		h := New(FeatureFlag{EnableCreateSpender: true}, sql)
+		h := New(config.FeatureFlag{EnableCreateSpender: true}, sql)
 		e := echo.New()
 		defer e.Close()
 
@@ -49,7 +49,7 @@ func TestGetAllSpenderIT(t *testing.T) {
 			t.Error(err)
 		}
 
-		h := New(FeatureFlag{}, sql)
+		h := New(config.FeatureFlag{}, sql)
 		e := echo.New()
 		defer e.Close()
 

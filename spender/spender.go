@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"net/http"
 
+	"github.com/KKGo-Software-engineering/workshop-summer/config"
 	"github.com/kkgo-software-engineering/workshop/mlog"
 	"github.com/labstack/echo/v4"
 	"go.uber.org/zap"
@@ -15,16 +16,12 @@ type Spender struct {
 	Email string `json:"email"`
 }
 
-type FeatureFlag struct {
-	EnableCreateSpender bool `json:"enableCreateSpender"`
-}
-
 type handler struct {
-	cfg FeatureFlag
-	db  *sql.DB
+	flag config.FeatureFlag
+	db   *sql.DB
 }
 
-func New(cfg FeatureFlag, db *sql.DB) *handler {
+func New(cfg config.FeatureFlag, db *sql.DB) *handler {
 	return &handler{cfg, db}
 }
 
@@ -33,7 +30,7 @@ const (
 )
 
 func (h handler) Create(c echo.Context) error {
-	if !h.cfg.EnableCreateSpender {
+	if !h.flag.EnableCreateSpender {
 		return c.JSON(http.StatusForbidden, "create new spender feature is disabled")
 	}
 

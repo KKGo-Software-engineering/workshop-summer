@@ -11,8 +11,9 @@ import (
 )
 
 type Config struct {
-	Database Database
-	Server   Server
+	Database    Database
+	Server      Server
+	FeatureFlag FeatureFlag
 }
 
 func (c Config) PostgresURI() string {
@@ -25,6 +26,10 @@ type Server struct {
 
 type Database struct {
 	PostgresURI string `env:"DATABASE_POSTGRES_URI,required"`
+}
+
+type FeatureFlag struct {
+	EnableCreateSpender bool `env:"ENABLE_CREATE_SPENDER"`
 }
 
 func Env(key string) string {
@@ -43,6 +48,10 @@ func ToBoolean(strVal string) bool {
 
 var once sync.Once
 var config Config
+
+func Get() Config {
+	return config
+}
 
 func C(envPrefix ...string) Config {
 	if len(envPrefix) > 1 {
@@ -64,6 +73,11 @@ func C(envPrefix ...string) Config {
 			log.Fatal(err)
 		}
 
+		feats := &FeatureFlag{}
+		if err := env.ParseWithOptions(feats, opts); err != nil {
+			log.Fatal(err)
+		}
+
 		port := os.Getenv("PORT")
 		if port == "" {
 			port = "8080"
@@ -75,6 +89,9 @@ func C(envPrefix ...string) Config {
 			},
 			Server: Server{
 				Port: port,
+			},
+			FeatureFlag: FeatureFlag{
+				EnableCreateSpender: feats.EnableCreateSpender,
 			},
 		}
 	})
