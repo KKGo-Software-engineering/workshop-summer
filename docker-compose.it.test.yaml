@@ -17,7 +17,7 @@ services:
       - integration-test
 
   db:
-    image: postgres:12.12
+    image: postgres:16.2
     user: postgres
     environment:
       POSTGRES_USER: postgres
