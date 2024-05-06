@@ -1,15 +1,15 @@
 # HongJot Requirements
 
 ## Context
-HongJot is a mobile app that helps users to track their expenses. Users can take a picture of their receipts and the app will extract the expense information from the image. The app will then store the expense information in a database and provide a summary of the expenses to the user.
+HongJot is a mobile app that helps spenders to track their expenses. Spenders can take a picture of their receipts and the app will extract the expense information from the image. The app will then store the expense information in a database and provide a summary of the expenses to the spender.
 
-# User Stories
-## Story 1: As a user, I want to upload an image of my receipt so that I can track my expenses.
+# Spender Stories
+## Story 1: As a spender, I want to upload an image of my receipt so that I can track my expenses.
 
 Acceptance Criteria:
-- The user can upload an image of their receipt.
+- The spender can upload an image of their receipt.
 - The image is stored in an S3 bucket.
-- The user receives a success message after the image is uploaded.
+- The spender receives a success message after the image is uploaded.
 
 Technical Requirements:
 - REST API to upload an image to an S3 bucket.
@@ -17,7 +17,7 @@ Technical Requirements:
 - Response 200 OK with a success message.
 - should handle any error and response appropriate error message and status code.
 
-## Story 2: As a Admin, I want to view a all of expenses list so that I can manupulate the expenses for user.
+## Story 2: As a Admin, I want to view a all of expenses list so that I can manupulate the expenses for spender.
 
 Acceptance Criteria:
 - The Admin can view a list of all their expenses.
@@ -55,12 +55,12 @@ Technical Requirements:
 - Response 200 OK with the created expense.
 - should handle any error and response appropriate error message and status code.
 
-## Story 5: As a User, I want to record my expenses so that I can track my spending.
+## Story 5: As a Spender, I want to record my expenses so that I can track my spending.
 
 Acceptance Criteria:
-- The user can record their expenses by providing the date, amount, category, and image URL.
+- The spender can record their expenses by providing the date, amount, category, and image URL.
 - The expense is stored in the database.
-- The user receives a success message after the expense is recorded.
+- The spender receives a success message after the expense is recorded.
 
 Technical Requirements:
 - REST API to record an expense.
@@ -68,12 +68,12 @@ Technical Requirements:
 - Request body should contain the date, amount, category, and image URL.
 - Response 200 OK with a success message.
 
-## Story 6: As a User, I want to record my income so that I can track my income.
+## Story 6: As a Spender, I want to record my income so that I can track my income.
 
 Acceptance Criteria:
-- The user can record their income by providing the date, amount, category, and image URL.
+- The spender can record their income by providing the date, amount, category, and image URL.
 - The income is stored in the database.
-- The user receives a success message after the income is recorded.
+- The spender receives a success message after the income is recorded.
 
 Technical Requirements:
 - REST API to record an income.
@@ -82,10 +82,10 @@ Technical Requirements:
 - Response 200 OK with a success message.
 - should handle any error and response appropriate error message and status code.
 
-## Story 7: As a User, I want to view a detailed list of my expenses so that I can see the details of each expense.
+## Story 7: As a Spender, I want to view a detailed list of my expenses so that I can see the details of each expense.
 
 Acceptance Criteria:
-- The user can view a detailed list of their expenses.
+- The spender can view a detailed list of their expenses.
 - The detailed list should include the date, amount, category, and image URL of each expense.
 
 Technical Requirements:
@@ -94,10 +94,10 @@ Technical Requirements:
 - Response 200 OK with the detailed list of expenses.
 - should handle any error and response appropriate error message and status code.
 
-## Story 8: As a User, I want to view a summary of my expenses so that I can see how much I have spent.
+## Story 8: As a Spender, I want to view a summary of my expenses so that I can see how much I have spent.
 
 Acceptance Criteria:
-- The user can view a summary of their expenses.
+- The spender can view a summary of their expenses.
 - The summary should include the total amount spent, the average amount spent per day, and the total number of expenses.
 
 Technical Requirements:
@@ -105,10 +105,10 @@ Technical Requirements:
 - Endpoint GET /expenses/summary to get a summary of expenses.
 - Response 200 OK with the summary of expenses.
 
-## Story 9: As a User, I want to view a summary of my income so that I can see how much I have earned.
+## Story 9: As a Spender, I want to view a summary of my income so that I can see how much I have earned.
 
 Acceptance Criteria:
-- The user can view a summary of their income.
+- The spender can view a summary of their income.
 - The summary should include the total amount earned, the average amount earned per day, and the total number of income.
 
 Technical Requirements:
@@ -117,10 +117,10 @@ Technical Requirements:
 - Response 200 OK with the summary of income.
 - should handle any error and response appropriate error message and status code.
 
-## Story 10: As a User, I want viw a summary balance of my income and expenses so that I can see how much I have saved.
+## Story 10: As a Spender, I want viw a summary balance of my income and expenses so that I can see how much I have saved.
 
 Acceptance Criteria:
-- The user can view a summary balance of their income and expenses.
+- The spender can view a summary balance of their income and expenses.
 - The summary should include the total amount earned, the total amount spent, and the total amount saved.
 - The total amount saved is calculated as the total amount earned minus the total amount spent.
 
@@ -130,12 +130,12 @@ Technical Requirements:
 - Response 200 OK with the summary balance of income and expenses.
 - should handle any error and response appropriate error message and status code.
 
-## Story 11: As a User, I want to edit an expense so that I can edit it from my records.
+## Story 11: As a Spender, I want to edit an expense so that I can edit it from my records.
 
 Acceptance Criteria:
-- The user can edit an expense by providing the date, amount, category, and image URL.
+- The spender can edit an expense by providing the date, amount, category, and image URL.
 - The expense is updated in the database.
-- The user receives a success message after the expense is updated.
+- The spender receives a success message after the expense is updated.
 
 Technical Requirements:
 - REST API to edit an expense.
@@ -301,9 +301,9 @@ Technical Requirements:
 }
 ```
 
-6. GET /api/v1/users/{id}/transections
+6. GET /api/v1/spenders/{id}/transections
 
-- Description: Retrieves a list of all transections for a specific user.
+- Description: Retrieves a list of all transections for a specific spender.
 - Response:
 - Status Code: 200 OK
 - Content Type: application/json
@@ -344,9 +344,9 @@ Technical Requirements:
 }
 ```
 
-7. GET /api/v1/users/{id}/transections/summary
+7. GET /api/v1/spenders/{id}/transections/summary
 
-- Description: Retrieves a summary of all transections for a specific user.
+- Description: Retrieves a summary of all transections for a specific spender.
 - Response:
 - Status Code: 200 OK
 - Content Type: application/json
@@ -362,9 +362,9 @@ Technical Requirements:
 }
 ```
 
-8. GET /api/v1/users
+8. GET /api/v1/spenders
 
-- Description: Retrieves a list of all users.
+- Description: Retrieves a list of all spenders.
 - Response:
 - Status Code: 200 OK
 - Content Type: application/json
@@ -372,7 +372,7 @@ Technical Requirements:
 
 ```json
 {
-	"users": [
+	"spenders": [
 		{
 			"id": 1,
 			"name": "John Doe",
@@ -382,9 +382,9 @@ Technical Requirements:
 }
 ```
 
-9 GET /api/v1/users/{id}
+9 GET /api/v1/spenders/{id}
 
-- Description: Retrieves a specific user.
+- Description: Retrieves a specific spender.
 - Response:
 - Status Code: 200 OK
 - Content Type: application/json
@@ -398,9 +398,9 @@ Technical Requirements:
 }
 ```
 
-10. POST /api/v1/users
+10. POST /api/v1/spenders
 
-- Description: Creates a new user.
+- Description: Creates a new spender.
 - Request Body:
 - Content Type: application/json
 - Example Payload:
@@ -433,7 +433,7 @@ NOTE:
 	- Authentication (Gen JWT token)
 	- Authorization (Gen JWT token)
 
-Model User -> Expense (1 to many)
+Model Spender -> Expense (1 to many)
 
 - DB Schema
 - Solution hints
@@ -455,7 +455,7 @@ sequenceDiagram
   HongJot API->>PostgreSQL Database: Store Expense info
 
 
-  Mobile App->>HongJot API: Get Expense Summary (User Requests Summary) Retrieve Expense Summary
+  Mobile App->>HongJot API: Get Expense Summary (Spender Requests Summary) Retrieve Expense Summary
   activate Mobile App
   HongJot API->>PostgreSQL Database: Get Expense Summary Data
   PostgreSQL Database->>HongJot API: Return Summary Data

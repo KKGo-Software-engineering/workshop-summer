@@ -1,4 +1,4 @@
-package user
+package spender
 
 import (
 	"database/sql"
@@ -9,14 +9,14 @@ import (
 	"go.uber.org/zap"
 )
 
-type User struct {
+type Spender struct {
 	ID    int64  `json:"id"`
 	Name  string `json:"name"`
 	Email string `json:"email"`
 }
 
 type FeatureFlag struct {
-	EnableCreateUser bool `json:"enableCreateUser"`
+	EnableCreateSpender bool `json:"enableCreateSpender"`
 }
 
 type handler struct {
@@ -29,17 +29,17 @@ func New(cfg FeatureFlag, db *sql.DB) *handler {
 }
 
 const (
-	cStmt = `INSERT INTO "user" (name, email) VALUES ($1, $2) RETURNING id;`
+	cStmt = `INSERT INTO spender (name, email) VALUES ($1, $2) RETURNING id;`
 )
 
 func (h handler) Create(c echo.Context) error {
-	if !h.cfg.EnableCreateUser {
-		return c.JSON(http.StatusForbidden, "create new user feature is disabled")
+	if !h.cfg.EnableCreateSpender {
+		return c.JSON(http.StatusForbidden, "create new spender feature is disabled")
 	}
 
 	logger := mlog.L(c)
 	ctx := c.Request().Context()
-	var ur User
+	var ur Spender
 	err := c.Bind(&ur)
 	if err != nil {
 		logger.Error("bad request body", zap.Error(err))
@@ -56,4 +56,29 @@ func (h handler) Create(c echo.Context) error {
 	logger.Info("create successfully", zap.Int64("id", lastInsertId))
 	ur.ID = lastInsertId
 	return c.JSON(http.StatusCreated, ur)
+}
+
+func (h handler) GetAll(c echo.Context) error {
+	logger := mlog.L(c)
+	ctx := c.Request().Context()
+
+	rows, err := h.db.QueryContext(ctx, `SELECT id, name, email FROM spender`)
+	if err != nil {
+		logger.Error("query error", zap.Error(err))
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+	defer rows.Close()
+
+	var spenders []Spender
+	for rows.Next() {
+		var u Spender
+		err := rows.Scan(&u.ID, &u.Name, &u.Email)
+		if err != nil {
+			logger.Error("scan error", zap.Error(err))
+			return c.JSON(http.StatusInternalServerError, err.Error())
+		}
+		spenders = append(spenders, u)
+	}
+
+	return c.JSON(http.StatusOK, spenders)
 }

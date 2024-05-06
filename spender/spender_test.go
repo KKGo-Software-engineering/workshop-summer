@@ -1,4 +1,4 @@
-package user
+package spender
 
 import (
 	"net/http"
@@ -11,9 +11,9 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCreateUser(t *testing.T) {
+func TestCreateSpender(t *testing.T) {
 
-	t.Run("create user succesfully when feature toggle is enable", func(t *testing.T) {
+	t.Run("create spender succesfully when feature toggle is enable", func(t *testing.T) {
 		e := echo.New()
 		defer e.Close()
 
@@ -27,7 +27,7 @@ func TestCreateUser(t *testing.T) {
 
 		row := sqlmock.NewRows([]string{"id"}).AddRow(1)
 		mock.ExpectQuery(cStmt).WithArgs("HongJot", "hong@jot.ok").WillReturnRows(row)
-		cfg := FeatureFlag{EnableCreateUser: true}
+		cfg := FeatureFlag{EnableCreateSpender: true}
 
 		h := New(cfg, db)
 		err := h.Create(c)
@@ -37,7 +37,7 @@ func TestCreateUser(t *testing.T) {
 		assert.JSONEq(t, `{"id": 1, "name": "HongJot", "email": "hong@jot.ok"}`, rec.Body.String())
 	})
 
-	t.Run("create user failed when feature toggle is disable", func(t *testing.T) {
+	t.Run("create spender failed when feature toggle is disable", func(t *testing.T) {
 		e := echo.New()
 		defer e.Close()
 
@@ -46,7 +46,7 @@ func TestCreateUser(t *testing.T) {
 		rec := httptest.NewRecorder()
 		c := e.NewContext(req, rec)
 
-		cfg := FeatureFlag{EnableCreateUser: false}
+		cfg := FeatureFlag{EnableCreateSpender: false}
 
 		h := New(cfg, nil)
 		err := h.Create(c)
@@ -55,7 +55,7 @@ func TestCreateUser(t *testing.T) {
 		assert.Equal(t, http.StatusForbidden, rec.Code)
 	})
 
-	t.Run("create user failed when bad request body", func(t *testing.T) {
+	t.Run("create spender failed when bad request body", func(t *testing.T) {
 		e := echo.New()
 		defer e.Close()
 
@@ -63,7 +63,7 @@ func TestCreateUser(t *testing.T) {
 		req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 		rec := httptest.NewRecorder()
 		c := e.NewContext(req, rec)
-		cfg := FeatureFlag{EnableCreateUser: true}
+		cfg := FeatureFlag{EnableCreateSpender: true}
 
 		h := New(cfg, nil)
 		err := h.Create(c)
@@ -73,7 +73,7 @@ func TestCreateUser(t *testing.T) {
 		assert.Contains(t, rec.Body.String(), "invalid character")
 	})
 
-	t.Run("create user failed on database (feature toggle is enable) ", func(t *testing.T) {
+	t.Run("create spender failed on database (feature toggle is enable) ", func(t *testing.T) {
 		e := echo.New()
 		defer e.Close()
 
@@ -86,7 +86,7 @@ func TestCreateUser(t *testing.T) {
 		defer db.Close()
 
 		mock.ExpectQuery(cStmt).WithArgs("HongJot", "hong@jot.ok").WillReturnError(assert.AnError)
-		cfg := FeatureFlag{EnableCreateUser: true}
+		cfg := FeatureFlag{EnableCreateSpender: true}
 
 		h := New(cfg, db)
 		err := h.Create(c)
@@ -95,3 +95,5 @@ func TestCreateUser(t *testing.T) {
 		assert.Equal(t, http.StatusInternalServerError, rec.Code)
 	})
 }
+
+func TestGetAllSpender(t *testing.T) {}

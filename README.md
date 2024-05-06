@@ -23,7 +23,7 @@ sequenceDiagram
   HongJot API->>PostgreSQL Database: Store Expense info
 
 
-  Mobile App->>HongJot API: Get Expense Summary (User Requests Summary) Retrieve Expense Summary
+  Mobile App->>HongJot API: Get Expense Summary (Spender Requests Summary) Retrieve Expense Summary
   activate Mobile App
   HongJot API->>PostgreSQL Database: Get Expense Summary Data
   PostgreSQL Database->>HongJot API: Return Summary Data

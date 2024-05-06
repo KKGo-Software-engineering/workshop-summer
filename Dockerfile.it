@@ -11,7 +11,7 @@ COPY go.mod go.sum ./
 RUN CGO_ENABLED=0 go mod download
 
 # Stage 2: Application runtime (uses cached dependencies)
-FROM golang:1.21.9-alpine
+FROM golang:1.21.9-alpine AS runtime
 
 COPY --from=builder /go/pkg /go/pkg
 

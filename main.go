@@ -86,7 +86,7 @@ func main() {
 	}
 
 	// create table
-	_, err = db.Exec(`CREATE TABLE users (
+	_, err = db.Exec(`CREATE TABLE spenders (
 			id SERIAL PRIMARY KEY,
 			name VARCHAR(50) NOT NULL,
 			email VARCHAR(50) NOT NULL
@@ -135,9 +135,9 @@ func Health(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
 }
 
-func GetAllUsers(db *sql.DB) echo.HandlerFunc {
+func GetAllSpenders(db *sql.DB) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		return c.JSON(http.StatusOK, map[string]string{"message": "get all users"})
+		return c.JSON(http.StatusOK, map[string]string{"message": "get all spenders"})
 	}
 }
 
@@ -150,7 +150,7 @@ func run(db *sql.DB) *echo.Echo {
 	v1.GET("/slow", Slow)
 	v1.GET("/health", Health)
 	v1.POST("/upload", UploadESlip)
-	v1.GET("/users", GetAllUsers(db))
+	v1.GET("/spenders", GetAllSpenders(db))
 
 	return e
 }

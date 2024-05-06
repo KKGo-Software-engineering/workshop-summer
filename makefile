@@ -36,7 +36,7 @@ health:
 	@echo "Checking the health of the server..."
 	curl http://localhost:8080/api/v1/health
 
-.PHONY: users
-users:
-	@echo "Getting the users..."
-	curl http://localhost:8080/api/v1/users
+.PHONY: spenders
+spenders:
+	@echo "Getting the spenders..."
+	curl http://localhost:8080/api/v1/spenders

@@ -1,6 +1,6 @@
 //go:build integration
 
-package user
+package spender
 
 import (
 	"database/sql"
@@ -15,23 +15,23 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCreateUserIT(t *testing.T) {
+func TestCreateSpenderIT(t *testing.T) {
 
-	t.Run("create user succesfully when feature toggle is enable", func(t *testing.T) {
+	t.Run("create spender succesfully when feature toggle is enable", func(t *testing.T) {
 		cfg := config.C("DOCKER")
 		sql, err := sql.Open("postgres", cfg.DBURL())
 		if err != nil {
 			t.Error(err)
 		}
 
-		h := New(FeatureFlag{EnableCreateUser: true}, sql)
+		h := New(FeatureFlag{EnableCreateSpender: true}, sql)
 		e := echo.New()
 		defer e.Close()
 
-		e.POST("/users", h.Create)
+		e.POST("/spenders", h.Create)
 
 		payload := `{"name": "HongJot", "email": "hong@jot.ok"}`
-		req := httptest.NewRequest(http.MethodPost, "/users", strings.NewReader(payload))
+		req := httptest.NewRequest(http.MethodPost, "/spenders", strings.NewReader(payload))
 		req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
 		rec := httptest.NewRecorder()
 
