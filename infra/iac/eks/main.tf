@@ -66,14 +66,9 @@ resource "helm_release" "argocd" {
 	chart      = "argo-cd"
 	version    = "6.7.17"
 
-	depends_on = [helm_release.nginx_ingress]
-}
+	values = [file("values/argocd.yaml")]
 
-resource "null_resource" "ingress" {
-	provisioner "local-exec" {
-		command = "kubectl apply -f argocd-ingress.yaml"
-	}
-	depends_on = [helm_release.argocd, helm_release.nginx_ingress]
+	depends_on = [helm_release.nginx_ingress]
 }
 
 data "kubernetes_service" "service" {
@@ -81,7 +76,7 @@ data "kubernetes_service" "service" {
 		name      = "ingress-nginx-controller"
 		namespace = "ingress-nginx"
 	}
-	depends_on = [null_resource.ingress]
+	depends_on = [helm_release.argocd]
 }
 
 resource "cloudflare_record" "argocd" {
