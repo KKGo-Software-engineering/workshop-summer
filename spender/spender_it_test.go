@@ -18,7 +18,7 @@ import (
 func TestCreateSpenderIT(t *testing.T) {
 	t.Run("create spender succesfully when feature toggle is enable", func(t *testing.T) {
 		cfg := config.C("DOCKER")
-		sql, err := sql.Open("postgres", cfg.DBURL())
+		sql, err := sql.Open("postgres", cfg.PostgresURI())
 		if err != nil {
 			t.Error(err)
 		}
@@ -44,7 +44,7 @@ func TestCreateSpenderIT(t *testing.T) {
 func TestGetAllSpenderIT(t *testing.T) {
 	t.Run("get all spender successfully", func(t *testing.T) {
 		cfg := config.C("DOCKER")
-		sql, err := sql.Open("postgres", cfg.DBURL())
+		sql, err := sql.Open("postgres", cfg.PostgresURI())
 		if err != nil {
 			t.Error(err)
 		}

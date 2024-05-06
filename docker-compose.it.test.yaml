@@ -7,10 +7,7 @@ services:
       context: .
       dockerfile: ./Dockerfile.it
     environment:
-      - DOCKER_DATABASE_USERNAME=postgres
-      - DOCKER_DATABASE_PASSWORD=password
-      - DOCKER_DATABASE_HOST=db
-      - DOCKER_DATABASE_NAME=hongjot
+      - DOCKER_DATABASE_POSTGRES_URI=postgres://postgres:password@db:5432/hongjot?sslmode=disable
     volumes:
       - $PWD:/go/src
     depends_on:

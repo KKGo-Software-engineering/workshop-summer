@@ -15,8 +15,8 @@ type Config struct {
 	Server   Server
 }
 
-func (c Config) DBURL() string {
-	return fmt.Sprintf("postgresql://%s:%s@%s:5432/%s?sslmode=disable", c.Database.Username, c.Database.Password, c.Database.Host, c.Database.Name)
+func (c Config) PostgresURI() string {
+	return c.Database.PostgresURI
 }
 
 type Server struct {
@@ -24,10 +24,7 @@ type Server struct {
 }
 
 type Database struct {
-	Host     string `env:"DATABASE_HOST,required"`
-	Name     string `env:"DATABASE_NAME,required"`
-	Username string `env:"DATABASE_USERNAME,required"`
-	Password string `env:"DATABASE_PASSWORD,required"`
+	PostgresURI string `env:"DATABASE_POSTGRES_URI,required"`
 }
 
 func Env(key string) string {
@@ -74,10 +71,7 @@ func C(envPrefix ...string) Config {
 
 		config = Config{
 			Database: Database{
-				Host:     dbconf.Host,
-				Name:     dbconf.Name,
-				Username: dbconf.Username,
-				Password: dbconf.Password,
+				PostgresURI: dbconf.PostgresURI,
 			},
 			Server: Server{
 				Port: port,
