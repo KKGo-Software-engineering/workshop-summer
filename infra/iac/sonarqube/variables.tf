@@ -9,3 +9,9 @@ variable "cloudflare_api_token" {
 	description = "Cloudflare API Token"
 	sensitive   = true
 }
+
+variable "instance_name" {
+	type        = string
+	description = "Name of the instance"
+	default     = "sonarqube"
+}

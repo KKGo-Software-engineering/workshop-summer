@@ -3,23 +3,23 @@ terraform {
 	required_providers {
 		aws = {
 			source  = "hashicorp/aws"
-			version = "~> 5.0"
+			version = "~> 5.48.0"
 		}
 		kubectl = {
 			source  = "gavinbunney/kubectl"
-			version = ">= 1.0.0, < 2.0.0"
+			version = "1.14.0"
 		}
 		null = {
 			source  = "hashicorp/null"
-			version = ">= 3.0.0"
+			version = "3.2.2"
 		}
 		kubernetes = {
 			source  = "hashicorp/kubernetes"
-			version = ">= 2.0.0, < 3.0.0"
+			version = "2.29.0"
 		}
 		argocd = {
 			source  = "oboukili/argocd"
-			version = ">= 6.0.0, < 7.0.0"
+			version = "6.1.1"
 		}
 		helm = {
 			source  = "hashicorp/helm"
@@ -27,7 +27,7 @@ terraform {
 		}
 		cloudflare = {
 			source  = "cloudflare/cloudflare"
-			version = ">= 4.0.0, < 5.0.0"
+			version = "4.31.0"
 		}
 	}
 }
