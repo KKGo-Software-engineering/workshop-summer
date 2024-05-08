@@ -87,31 +87,22 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// create table
-	_, err = db.Exec(`CREATE TABLE spenders (
-			id SERIAL PRIMARY KEY,
-			name VARCHAR(50) NOT NULL,
-			email VARCHAR(50) NOT NULL
-		)`)
-
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	e := run(db)
+	env := config.Env("ENV")
+	cfg := config.Parse(env)
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
+	e := run(db, cfg)
 
 	go func() { // comment here to simulate slow endpoint then Ctrl+C to stop the server
-		if err := e.Start(":" + port); err != nil && err != http.ErrServerClosed {
+		if err := e.Start(":" + cfg.Server.Port); err != nil && err != http.ErrServerClosed {
 			e.Logger.Fatal("shutting down the server:", err)
 		}
 	}()
 
-	e.Logger.Infof("Server is running on :%s", port)
+	e.Logger.Infof("Server is running on :%s", cfg.Server.Port)
 
 	// Wait for interrupt signal to gracefully shutdown the server with a timeout of 10 seconds.
 	sig, stop := signal.NotifyContext(context.Background(), os.Interrupt)
@@ -137,12 +128,9 @@ func Health(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
 }
 
-func run(db *sql.DB) *echo.Echo {
+func run(db *sql.DB, cfg config.Config) *echo.Echo {
 	e := echo.New()
 	e.Logger.SetLevel(log.INFO)
-
-	env := config.Env("ENV")
-	cfg := config.C(env)
 
 	v1 := e.Group("/api/v1")
 

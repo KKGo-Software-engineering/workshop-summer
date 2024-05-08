@@ -1,10 +1,10 @@
 package config
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 	"sync"
 
 	"github.com/caarlos0/env/v10"
@@ -21,7 +21,7 @@ func (c Config) PostgresURI() string {
 }
 
 type Server struct {
-	Port string
+	Port string `env:"SERVER_PORT"`
 }
 
 type Database struct {
@@ -35,15 +35,10 @@ type FeatureFlag struct {
 func Env(key string) string {
 	value := os.Getenv(key)
 	if value == "" {
-		log.Fatal("Environment variable " + key + " is not set")
+		log.Println("Environment variable " + key + " is not set")
 	}
 
 	return value
-}
-
-func ToBoolean(strVal string) bool {
-	boolVal, _ := strconv.ParseBool(strVal)
-	return boolVal
 }
 
 var once sync.Once
@@ -53,46 +48,53 @@ func Get() Config {
 	return config
 }
 
-func C(envPrefix ...string) Config {
-	if len(envPrefix) > 1 {
-		log.Fatal("can pass only one prefix for env but your prefix:", envPrefix)
+func prefix(env string) string {
+	if env != "" {
+		return fmt.Sprintf("%s_", env)
 	}
 
+	return ""
+}
+
+func parse(envPrefix string) (Config, error) {
+	opts := env.Options{
+		Prefix: prefix(envPrefix),
+	}
+
+	dbconf := &Database{}
+	if err := env.ParseWithOptions(dbconf, opts); err != nil {
+		return Config{}, errors.New("failed to parse database config:" + err.Error())
+	}
+
+	feats := &FeatureFlag{}
+	if err := env.ParseWithOptions(feats, opts); err != nil {
+		return Config{}, errors.New("failed to parse feature flag config:" + err.Error())
+	}
+
+	port := Env("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	return Config{
+		Database: Database{
+			PostgresURI: dbconf.PostgresURI,
+		},
+		Server: Server{
+			Port: port,
+		},
+		FeatureFlag: FeatureFlag{
+			EnableCreateSpender: feats.EnableCreateSpender,
+		},
+	}, nil
+}
+
+func Parse(envPrefix string) Config {
 	once.Do(func() {
-		var prefix string
-		if len(envPrefix) == 1 {
-			prefix = fmt.Sprintf("%s_", envPrefix[0])
-		}
-
-		opts := env.Options{
-			Prefix: prefix,
-		}
-
-		dbconf := &Database{}
-		if err := env.ParseWithOptions(dbconf, opts); err != nil {
-			log.Fatal(err)
-		}
-
-		feats := &FeatureFlag{}
-		if err := env.ParseWithOptions(feats, opts); err != nil {
-			log.Fatal(err)
-		}
-
-		port := os.Getenv("PORT")
-		if port == "" {
-			port = "8080"
-		}
-
-		config = Config{
-			Database: Database{
-				PostgresURI: dbconf.PostgresURI,
-			},
-			Server: Server{
-				Port: port,
-			},
-			FeatureFlag: FeatureFlag{
-				EnableCreateSpender: feats.EnableCreateSpender,
-			},
+		var err error
+		config, err = parse(envPrefix)
+		if err != nil {
+			log.Panic(err)
 		}
 	})
 
