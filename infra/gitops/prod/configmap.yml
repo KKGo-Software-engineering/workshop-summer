@@ -4,4 +4,5 @@ metadata:
   name: app-config
   namespace: group-0-prod
 data:
+    # Using secret management for production work
     db.url: "postgres://<USERNAME>:<PASSWORD>@<HOST>:5432/hongjot-<GROUP_NO>-prod"

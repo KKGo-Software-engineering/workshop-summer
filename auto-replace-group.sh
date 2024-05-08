@@ -2,7 +2,7 @@
 
 read -p "Enter group number (ex. group-1): " group_number
 
-group_pattern="<group-no>"
+group_pattern="<GROUP_NO>"
 
 working_directory="../"
 
