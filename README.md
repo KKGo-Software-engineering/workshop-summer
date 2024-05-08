@@ -6,6 +6,11 @@
 - [Terraform](https://learn.hashicorp.com/tutorials/terraform/install-cli) - Never mind if you don't have it, we have
   done it for you
 
+## Tools
+- SonarQube - [https://sonarqube.werockstar.dev/](https://sonarqube.werockstar.dev/)
+- ArgoCD - [https://argocd.werockstar.dev/](https://argocd.werockstar.dev/)
+
+
 # HongJot Diagram
 
 ```mermaid
