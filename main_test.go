@@ -5,6 +5,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 )
@@ -15,7 +16,9 @@ func TestHealth(t *testing.T) {
 	e := echo.New()
 	c := e.NewContext(req, rec)
 
-	err := Health(c)
+	db, _, _ := sqlmock.New()
+
+	err := Health(db)(c)
 
 	assert.Nil(t, err)
 	assert.Equal(t, http.StatusOK, rec.Code)
