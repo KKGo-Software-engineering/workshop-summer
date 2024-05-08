@@ -36,23 +36,23 @@ func (h handler) Create(c echo.Context) error {
 
 	logger := mlog.L(c)
 	ctx := c.Request().Context()
-	var ur Spender
-	err := c.Bind(&ur)
+	var sp Spender
+	err := c.Bind(&sp)
 	if err != nil {
 		logger.Error("bad request body", zap.Error(err))
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	var lastInsertId int64
-	err = h.db.QueryRowContext(ctx, cStmt, ur.Name, ur.Email).Scan(&lastInsertId)
+	err = h.db.QueryRowContext(ctx, cStmt, sp.Name, sp.Email).Scan(&lastInsertId)
 	if err != nil {
 		logger.Error("query row error", zap.Error(err))
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
 	logger.Info("create successfully", zap.Int64("id", lastInsertId))
-	ur.ID = lastInsertId
-	return c.JSON(http.StatusCreated, ur)
+	sp.ID = lastInsertId
+	return c.JSON(http.StatusCreated, sp)
 }
 
 func (h handler) GetAll(c echo.Context) error {
@@ -66,16 +66,16 @@ func (h handler) GetAll(c echo.Context) error {
 	}
 	defer rows.Close()
 
-	var spenders []Spender
+	var sps []Spender
 	for rows.Next() {
-		var u Spender
-		err := rows.Scan(&u.ID, &u.Name, &u.Email)
+		var sp Spender
+		err := rows.Scan(&sp.ID, &sp.Name, &sp.Email)
 		if err != nil {
 			logger.Error("scan error", zap.Error(err))
 			return c.JSON(http.StatusInternalServerError, err.Error())
 		}
-		spenders = append(spenders, u)
+		sps = append(sps, sp)
 	}
 
-	return c.JSON(http.StatusOK, spenders)
+	return c.JSON(http.StatusOK, sps)
 }
