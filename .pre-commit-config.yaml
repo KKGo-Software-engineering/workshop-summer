@@ -28,5 +28,4 @@ repos:
         entry: go test -v ./...
         pass_filenames: false
         types: [go]
-        files: ^subdir/
         stages: [pre-commit]
