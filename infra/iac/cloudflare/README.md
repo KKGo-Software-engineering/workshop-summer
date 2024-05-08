@@ -6,18 +6,18 @@ This module intended to map DNS for each group in Go workshop.
   - `dev` for development environment
   - `prod` for production environment
 
-- Dev
-	- `group-1-dev`: `group-1-dev.werockstar.dev`
-	- `group-2-dev`: `group-2-dev.werockstar.dev`
-	- `group-3-dev`: `group-3-dev.werockstar.dev`
-	- `group-4-dev`: `group-4-dev.werockstar.dev`
-	- `group-5-dev`: `group-5-dev.werockstar.dev`
-- Prod
-	- `group-1-prod`: `group-1-prod.werockstar.dev`
-	- `group-2-prod`: `group-2-prod.werockstar.dev`
-	- `group-3-prod`: `group-3-prod.werockstar.dev`
-	- `group-4-prod`: `group-4-prod.werockstar.dev`
-	- `group-5-prod`: `group-5-prod.werockstar.dev`
+  - Dev
+	  - `group-1-b1-dev`: `group-1-b1-dev.werockstar.dev`
+	  - `group-2-b1-dev`: `group-2-b1-dev.werockstar.dev`
+	  - `group-3-b1-dev`: `group-3-b1-dev.werockstar.dev`
+	  - `group-4-b1-dev`: `group-4-b1-dev.werockstar.dev`
+	  - `group-5-b1-dev`: `group-5-b1-dev.werockstar.dev`
+  - Prod
+	  - `group-1-b1-prod`: `group-1-b1-prod.werockstar.dev`
+	  - `group-2-b1-prod`: `group-2-b1-prod.werockstar.dev`
+	  - `group-3-b1-prod`: `group-3-b1-prod.werockstar.dev`
+	  - `group-4-b1-prod`: `group-4-b1-prod.werockstar.dev`
+	  - `group-5-b1-prod`: `group-5-b1-prod.werockstar.dev`
 
 ## Requirements
 - Cloudflare API Token
