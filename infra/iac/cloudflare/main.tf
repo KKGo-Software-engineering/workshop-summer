@@ -22,7 +22,7 @@ data "kubernetes_service" "service" {
 
 resource "cloudflare_record" "cnames" {
 	count   = length(var.subdomains)
-	name    = "${var.subdomains[count.index]}-${terraform.workspace}-${var.batch_no}"
+	name    = "${var.subdomains[count.index]}-${var.batch_no}-${terraform.workspace}"
 	value   = data.kubernetes_service.service.status[0].load_balancer[0].ingress[0].hostname
 	type    = "CNAME"
 	proxied = true

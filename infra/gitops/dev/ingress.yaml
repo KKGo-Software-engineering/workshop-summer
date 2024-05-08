@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: <GROUP_NO>-dev-b1.werockstar.dev
+  - host: <GROUP_NO>-dev.werockstar.dev
     http:
       paths:
       - path: /

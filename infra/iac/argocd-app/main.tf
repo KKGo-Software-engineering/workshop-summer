@@ -23,7 +23,7 @@ resource "argocd_application" "argocd_app" {
 
 		source {
 			repo_url        = "https://github.com/KKGo-Software-engineering/workshop-summer-${var.argo_apps[count.index]}"
-			path            = "gitops/${terraform.workspace}"
+			path            = "infra/gitops/${terraform.workspace}"
 			target_revision = "main"
 		}
 

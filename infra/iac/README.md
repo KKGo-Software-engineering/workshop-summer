@@ -6,15 +6,15 @@
   - We're still create project in SonarQube manually
 - [Cloudflare](cloudflare/README.md) - Create Cloudflare DNS record for all group
   - Dev
-    - `group-1-dev-b1`: `group-1-dev-b1.werockstar.dev`
-    - `group-2-dev-b1`: `group-2-dev-b1.werockstar.dev`
-    - `group-3-dev-b1`: `group-3-dev-b1.werockstar.dev`
-    - `group-4-dev-b1`: `group-4-dev-b1.werockstar.dev`
-    - `group-5-dev-b1`: `group-5-dev-b1.werockstar.dev`
+    - `group-1-b1-dev`: `group-1-b1-dev.werockstar.dev`
+    - `group-2-b1-dev`: `group-2-b1-dev.werockstar.dev`
+    - `group-3-b1-dev`: `group-3-b1-dev.werockstar.dev`
+    - `group-4-b1-dev`: `group-4-b1-dev.werockstar.dev`
+    - `group-5-b1-dev`: `group-5-b1-dev.werockstar.dev`
   - Prod
-    - `group-1-prod-b1`: `group-1-prod-b1.werockstar.dev`
-    - `group-2-prod-b1`: `group-2-prod-b1.werockstar.dev`
-    - `group-3-prod-b1`: `group-3-prod-b1.werockstar.dev`
-    - `group-4-prod-b1`: `group-4-prod-b1.werockstar.dev`
-    - `group-5-prod-b1`: `group-5-prod-b1.werockstar.dev`
+    - `group-1-b1-prod`: `group-1-b1-prod.werockstar.dev`
+    - `group-2-b1-prod`: `group-2-b1-prod.werockstar.dev`
+    - `group-3-b1-prod`: `group-3-b1-prod.werockstar.dev`
+    - `group-4-b1-prod`: `group-4-b1-prod.werockstar.dev`
+    - `group-5-b1-prod`: `group-5-b1-prod.werockstar.dev`
   - `group-0` is reserved for instructor
