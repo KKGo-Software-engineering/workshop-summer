@@ -14,7 +14,7 @@ spec:
         app: api
     spec:
       containers:
-        - name: workshop-summer
+        - name: workshop-summer-<GROUP_NO>
           image: ghcr.io/kkgo-software-engineering/workshop-summer-<GROUP_NO>:a8704d65943f6596e13f8afaaf37d3c8989810fe
           imagePullPolicy: Always
           env:
