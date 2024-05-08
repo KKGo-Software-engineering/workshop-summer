@@ -2,3 +2,4 @@ infra
 .github
 *.md
 *.yaml
+*.png
