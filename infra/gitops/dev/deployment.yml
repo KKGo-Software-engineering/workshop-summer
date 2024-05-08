@@ -17,6 +17,12 @@ spec:
         - name: workshop-summer
           image: ghcr.io/kkgo-software-engineering/workshop-summer:a8704d65943f6596e13f8afaaf37d3c8989810fe
           imagePullPolicy: Always
+          env:
+              -  name: DATABASE_POSTGRES_URI
+                 valueFrom:
+                    configMapKeyRef:
+                        name: app-config
+                        key: db.url
           livenessProbe:
             httpGet:
               path: /api/v1/health
