@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: group-0-dev-deployment
-  namespace: group-0-dev
+  name: <GROUP_NO>-dev-deployment
+  namespace: <GROUP_NO>-dev
 spec:
   selector:
     matchLabels:
