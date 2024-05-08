@@ -1,12 +1,13 @@
 package main
 
 import (
+	"database/sql"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/labstack/echo/v4"
+	_ "github.com/proullon/ramsql/driver"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -16,7 +17,7 @@ func TestHealth(t *testing.T) {
 	e := echo.New()
 	c := e.NewContext(req, rec)
 
-	db, _, _ := sqlmock.New()
+	db, _ := sql.Open("ramsql", "TestHealth")
 
 	err := Health(db)(c)
 
