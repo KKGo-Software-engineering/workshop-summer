@@ -73,19 +73,18 @@ jobs:
             -   name: Setup SHA
                 run: echo "GITHUB_SHA=${GITHUB_SHA}" >> $GITHUB_ENV
 
-            -   name: Login Registry
+            -   name: Login ghcr.io
                 uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
                 with:
-                    #                    registry: ghcr.io
-                    username: ${{ secrets.DOCKER_USER }}
-                    password: ${{ secrets.DOCKER_TOKEN }}
+                    registry: ghcr.io
+                    username: ${{ github.actor }}
+                    password: ${{ secrets.GITHUB_TOKEN }}
 
             -   name: Build and push Docker image
                 uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
                 with:
                     push: ${{ github.ref == 'refs/heads/main' }}
                     tags: ghcr.io/kkgo-software-engineering/workshop-summer:${{ env.GITHUB_SHA }}
-#                    tags: "${{ secrets.DOCKER_USER }}/${{ env.PROJECT_NAME }}:${{ env.GITHUB_SHA }}"
 
             -   name: Image digest
                 run: echo ${{ steps.docker_build.outputs.digest }}
