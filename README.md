@@ -33,17 +33,17 @@ sequenceDiagram
 
 We have created the infrastructure for you using Terraform. The infrastructure consists of the following:
 
-- Kubernetes Cluster (EKS)
-- PostgreSQL (RDS)
-- SonarQube
+- Kubernetes Cluster (EKS) - Managed Kubernetes Service
+- `PostgreSQL` (RDS) - Relational Database (Managed Service)
+- `SonarQube` - Static Code Analysis
 - Github
 	- Github Action
 	- Github Container Registry
-- ArgoCD
+- ArgoCD - Continuous Delivery
 
 ## How to use Terraform
 
-- Create IAM account for `Terraform`
+- Create **IAM** account for `Terraform`
 - `aws configure` - Configure your AWS credentials
 - Create ESK Cluster
 	- `cd infra/iac/eks`

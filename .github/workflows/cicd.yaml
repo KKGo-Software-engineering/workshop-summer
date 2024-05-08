@@ -84,8 +84,8 @@ jobs:
                 uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
                 with:
                     push: ${{ github.ref == 'refs/heads/main' }}
-                    tags: "${{ secrets.DOCKER_USER }}/${{ env.PROJECT_NAME }}:${{ env.GITHUB_SHA }}"
-            #                    tags: ghcr.io/kkgo-software-engineering/workshop-summer:${{ env.GITHUB_SHA }}
+                    tags: ghcr.io/kkgo-software-engineering/workshop-summer:${{ env.GITHUB_SHA }}
+#                    tags: "${{ secrets.DOCKER_USER }}/${{ env.PROJECT_NAME }}:${{ env.GITHUB_SHA }}"
 
             -   name: Image digest
                 run: echo ${{ steps.docker_build.outputs.digest }}
@@ -107,7 +107,7 @@ jobs:
             -   name: change image tag to deploy dev
                 if: ${{ github.ref == 'refs/heads/main' }}
                 run: |
-                    sed -i -E "s/werockstar\/workshop-summer.*$/werockstar\/workshop-summer:${GITHUB_SHA}/" infra/gitops/dev/deployment.yml
+                    sed -i -E "s/ghcr.io\/kkgo-software-engineering\/workshop-summer.*$/ghcr.io\/kkgo-software-engineering\/workshop-summer:${GITHUB_SHA}/" infra/gitops/dev/deployment.yml
                     git add infra/gitops/dev/deployment.yml
                     git commit -m "[skip actions] 🤖 change dev docker image version to ${GITHUB_SHA}"
                     git pull --rebase
