@@ -15,7 +15,7 @@ import (
 	"github.com/KKGo-Software-engineering/workshop-summer/spender"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
-	_ "github.com/proullon/ramsql/driver"
+	_ "github.com/lib/pq"
 )
 
 func UploadToS3(c echo.Context, filename string, src multipart.File) (string, error) {
@@ -81,18 +81,17 @@ func UploadESlip(c echo.Context) error {
 }
 
 func main() {
-	// inmemory db ramql
-	db, err := sql.Open("ramsql", "TestGormQuickStart")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	env := config.Env("ENV")
 	cfg := config.Parse(env)
+
+	db, err := sql.Open("postgres", cfg.Database.PostgresURI)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	e := run(db, cfg)
 
@@ -124,8 +123,18 @@ func Slow(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
 }
 
-func Health(c echo.Context) error {
-	return c.JSON(http.StatusOK, map[string]string{"status": "ok"})
+func Health(db *sql.DB) func(c echo.Context) error {
+	return func(c echo.Context) error {
+		if err := db.Ping(); err != nil {
+			return c.JSON(http.StatusInternalServerError, map[string]string{
+				"status":  "error",
+				"message": fmt.Sprintf("api server is live: but can't connect to database: %s", err.Error())})
+		}
+
+		return c.JSON(http.StatusOK, map[string]string{
+			"status":  "ok",
+			"message": "api is ready and connected to database"})
+	}
 }
 
 func run(db *sql.DB, cfg config.Config) *echo.Echo {
@@ -135,7 +144,7 @@ func run(db *sql.DB, cfg config.Config) *echo.Echo {
 	v1 := e.Group("/api/v1")
 
 	v1.GET("/slow", Slow)
-	v1.GET("/health", Health)
+	v1.GET("/health", Health(db))
 	v1.POST("/upload", UploadESlip)
 
 	{
