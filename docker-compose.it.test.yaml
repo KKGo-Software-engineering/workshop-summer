@@ -23,6 +23,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: hongjot
+    volumes:
+      - db-data:/var/lib/postgresql/data
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready']
       interval: 10s
@@ -30,3 +32,6 @@ services:
       retries: 5
     networks:
       - integration-test
+
+volumes:
+  db-data:
