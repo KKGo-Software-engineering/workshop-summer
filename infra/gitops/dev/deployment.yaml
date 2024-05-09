@@ -20,9 +20,9 @@ spec:
           env:
               -  name: DATABASE_POSTGRES_URI
                  valueFrom:
-                    configMapKeyRef:
-                        name: app-config
-                        key: db.url
+                     secretKeyRef:
+                         key: db.url
+                         name: secret
           livenessProbe:
             httpGet:
               path: /api/v1/health
