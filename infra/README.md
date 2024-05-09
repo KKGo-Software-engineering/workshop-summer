@@ -1,4 +1,4 @@
-# GitOps and Instrastructure as Code
+# GitOps and Infrastructure as Code
 - [GitOps](gitops) - `ArgoCD` will sync the configuration from here
   - [dev](gitops/dev) - Dev environment
   - [prod](gitops/prod) - Prod environment
