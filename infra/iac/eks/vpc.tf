@@ -5,4 +5,7 @@ resource "aws_vpc" "workshop" {
     Cluster = var.cluster_name
     Name    = "${var.cluster_name}-vpc"
   }
+
+  enable_dns_support   = true
+  enable_dns_hostnames = true
 }
