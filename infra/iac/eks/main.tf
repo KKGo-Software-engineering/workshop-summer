@@ -12,6 +12,8 @@ resource "aws_eks_cluster" "eks-cluster" {
 		]
 	}
 
+	enabled_cluster_log_types = ["api", "audit"]
+
 	timeouts {
 		delete = "30m"
 	}

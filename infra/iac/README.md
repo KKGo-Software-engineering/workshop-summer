@@ -18,3 +18,5 @@
     - `group-4-b1-prod`: `group-4-b1-prod.werockstar.dev`
     - `group-5-b1-prod`: `group-5-b1-prod.werockstar.dev`
   - `group-0` is reserved for instructor
+    - `group-0-b1-dev`: `group-0-b1-dev.werockstar.dev`
+    - `group-0-b1-prod`: `group-0-b1-prod.werockstar.dev`
