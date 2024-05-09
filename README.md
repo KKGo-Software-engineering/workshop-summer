@@ -1,12 +1,20 @@
 # Go summer workshop
 
-- [Pre-requisites](#pre-requisites)
-- [Tools](#tools)
+- [Go summer workshop](#go-summer-workshop)
+	- [Pre-requisites](#pre-requisites)
+	- [Tools](#tools)
 - [HongJot Diagram](#hongjot-diagram)
-- [Getting Started](#getting-started)
-  - [Step 0: IaC (Infrastructure as Code)](#step-0-iac-infrastructure-as-code-)
-  - [Step 1: Fork the repository and setup Github Actions](#step-1-fork-the-repository-and-setup-github-actions-)
-  - [Step 2: Create ArgoCD application](#step-2-create-argocd-application)
+	- [Infrastructure](#infrastructure)
+	- [Getting Started](#getting-started)
+		- [Step 0: IaC (Infrastructure as Code) ✅](#step-0-iac-infrastructure-as-code-)
+		- [Step 1: Fork the repository and setup Github Actions ✅](#step-1-fork-the-repository-and-setup-github-actions-)
+		- [Step 2: Create ArgoCD application](#step-2-create-argocd-application)
+	- [🏁 Development เริ่มยังไง?](#-development-เริ่มยังไง)
+	- [👻 รัน Test ยังไง?](#-รัน-test-ยังไง)
+		- [🪛 Unit](#-unit)
+		- [⚙️ Integration](#️-integration)
+	- [⚓ ใช้งาน pre-commit](#-ใช้งาน-pre-commit)
+	- [🗃️ ใช้งาน database migration](#️-ใช้งาน-database-migration)
 
 ## Pre-requisites
 - [Go version 1.21.9 or higher installed](https://go.dev/dl/)
@@ -136,3 +144,145 @@ We have created the infrastructure by using Terraform. The infrastructure consis
    - Path: `infra/gitops/prod`
    - Cluster URL: `https://kubernetes.default.svc`
    - กด `Create` มุมบนซ้าย
+
+## 🏁 Development เริ่มยังไง?
+
+ใน Repository นี้เราใช้ Makefile ในการทำงานได้ ดังนั้นสามารถสั่งรันง่ายๆ ผ่าน `make` ได้เลย
+
+1.เริ่มต้นลองสั่งติดตั้ง dependencies ของ Go มาก่อน
+
+```console
+go mod tidy
+```
+
+2.จากนั้น set environment variable โดยสร้าง file ใหม่ชื่อ `.env` แล้ว copy content จาก `.env.template` มา แล้วเปลี่ยน `db:5432` เป็น `localhost:5432`
+
+```
+ENV=LOCAL
+LOCAL_DATABASE_POSTGRES_URI=postgres://postgres:password@localhost:5432/hongjot?sslmode=disable
+LOCAL_SERVER_PORT=8080
+
+# Features Flags
+LOCAL_ENABLE_CREATE_SPENDER=false
+```
+
+3.Export environment variable ด้วยเครื่องมืออย่าง [direnv](https://direnv.net/) หรือจะใช้คำสั่งนี้ก็ได้
+
+```shell
+# Using source (.)
+source .env
+
+# or using export
+export $(cat .env)
+```
+
+4.สร้าง PostgreSQL บน local machine ผ่าน `docker-compose` ด้วยคำสั่ง
+
+```console
+docker-compose up -d
+```
+
+5.จากนั้นสั่งรันได้เลย
+
+```console
+make run
+```
+
+หรือถ้าใครใช้ [Makefile](https://makefiletutorial.com/) ไม่ได้ก็ใช้คำสั่งตรงก็ได้ โดยเข้าไปดูแต่ละคำสั่งใน `makefile` ได้เลย
+
+```console
+go run main.go
+```
+
+เมื่อ Server ทำงานได้ควรจะสามารถเรียกจาก [http://localhost:8080/api/v1/health](http://localhost:8080/api/v1/health) ได้
+
+```console
+make health
+
+Checking the health of the server...
+curl http://localhost:8080/api/v1/health
+{"message":"api is ready and connected to database","status":"ok"}
+```
+
+## 👻 รัน Test ยังไง?
+
+โปรเจกนี้มี 2 ระดับคือ `unit`, `integration` รันได้ดังนี้
+
+### 🪛 Unit
+
+```console
+make test
+```
+
+### ⚙️ Integration
+
+Run ผ่าน Docker
+```console
+make test-it-docker
+```
+
+Run ตรง
+```console
+make test-it
+```
+
+**หมายเหตุ**: ตอนเขียน integration test ต้องตั้งชื่อเป็น format `Test...IT` ไม่งั้นตอน run มันจะข้ามไป
+
+## ⚓ ใช้งาน pre-commit
+[pre-commit](https://pre-commit.com/) คือ framework ที่ใช้ run script (hooks) ก่อน commit หรือ push ผ่าน Git โดยให้ทำการติดตั้งตาม[คู่มือ](https://pre-commit.com/#install) จากนั้น run คำสั่ง
+
+```console
+make setup-pre-commit
+```
+
+ทีนี้เวลาเรา commit หรือ push มันก็จะไป run คำสั่งต่าง ๆ ที่จะดักปัญหาก่อนไม่ให้ CI/CD pipeline ของเราพังนั่นเอง
+
+## 🗃️ ใช้งาน database migration
+Project นี้เราใช้ [goose](https://github.com/pressly/goose) เป็น database migration tool โดย database script จะเก็บไว้อยู่ที่ directory `migration` ตอนที่เราสร้าง script ใหม่ก็ให้เอามาไว้ที่ directory `migration` โดยตั้งชื่อเป็น `0X_<script_name_with_underscore>.sql` แล้วใส่ content ดังนี้
+
+```sql
+-- +goose Up
+-- +goose StatementBegin
+SELECT 'up SQL query';
+-- +goose StatementEnd
+
+-- +goose Down
+-- +goose StatementBegin
+SELECT 'down SQL query';
+-- +goose StatementEnd
+```
+
+เวลาเรา run server ขึ้นมามันจะทำการ apply migration ให้อัตโนมัติ แต่ในส่วนของ integration test ต้องเขียน apply และ rollback ด้วย ประมาณนี้
+
+```go
+import (
+	"database/sql"
+	"testing"
+
+	"github.com/KKGo-Software-engineering/workshop-summer/config"
+	"github.com/KKGo-Software-engineering/workshop-summer/migration"
+	_ "github.com/lib/pq"
+)
+
+func TestSomethingIT(t *testing.T) {
+	t.Run("create spender succesfully when feature toggle is enable", func(t *testing.T) {
+		sql, err := getTestDatabaseFromConfig()
+		if err != nil {
+			t.Error(err)
+		}
+		migration.ApplyMigrations(sql)
+		defer migration.RollbackMigrations(sql)
+
+		// เขียน test ต่อได้เลย
+	})
+}
+
+func getTestDatabaseFromConfig() (*sql.DB, error) {
+	cfg := config.Parse("DOCKER")
+	sql, err := sql.Open("postgres", cfg.PostgresURI())
+	if err != nil {
+		return nil, err
+	}
+	return sql, nil
+}
+```
