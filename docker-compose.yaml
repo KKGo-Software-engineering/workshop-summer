@@ -6,8 +6,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: hongjot
-    volumes:
-      - ./schema:/docker-entrypoint-initdb.d/
     ports:
       - '5432:5432'
     healthcheck:

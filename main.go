@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/KKGo-Software-engineering/workshop-summer/config"
+	"github.com/KKGo-Software-engineering/workshop-summer/migration"
 	"github.com/KKGo-Software-engineering/workshop-summer/spender"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
@@ -88,8 +89,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	if err != nil {
+	if err := migration.ApplyMigrations(db); err != nil {
 		log.Fatal(err)
 	}
 

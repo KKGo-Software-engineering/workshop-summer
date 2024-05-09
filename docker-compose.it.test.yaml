@@ -23,8 +23,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: hongjot
-    volumes:
-      - ./schema:/docker-entrypoint-initdb.d/
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready']
       interval: 10s
