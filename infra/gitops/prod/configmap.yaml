@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: app-config
-  namespace: <GROUP_NO>-prod
+    name: app-config
+    namespace: <GROUP_NO>-prod
 data:
-    # Using secret management for production work
-    db.url: "postgres://<USERNAME>:<PASSWORD>@<HOST>:5432/hongjot-<GROUP_NO>-prod"
+    server.port: "8080"
+    enable.create.spender: "false"

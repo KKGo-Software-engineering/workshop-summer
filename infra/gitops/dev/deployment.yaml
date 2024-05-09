@@ -23,6 +23,16 @@ spec:
                      secretKeyRef:
                          key: db.url
                          name: secret
+              -  name: SERVER_PORT
+                 valueFrom:
+                     configMapKeyRef:
+                         name: app-config
+                         key: server.port
+              -  name: ENABLE_CREATE_SPENDER
+                 valueFrom:
+                     configMapKeyRef:
+                         name: app-config
+                         key: enable.create.spender
           livenessProbe:
             httpGet:
               path: /api/v1/health
