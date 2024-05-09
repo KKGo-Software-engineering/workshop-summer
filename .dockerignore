@@ -3,3 +3,4 @@ infra
 *.md
 *.yaml
 *.png
+makefile

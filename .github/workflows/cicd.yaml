@@ -106,8 +106,8 @@ jobs:
             -   name: change image tag to deploy dev
                 if: ${{ github.ref == 'refs/heads/main' }}
                 run: |
-                    sed -i -E "s/ghcr.io\/kkgo-software-engineering\/workshop-summer-<GROUP_NO>.*$/ghcr.io\/kkgo-software-engineering\/workshop-summer-<GROUP_NO>:${GITHUB_SHA}/" infra/gitops/dev/deployment.yml
-                    git add infra/gitops/dev/deployment.yml
+                    sed -i -E "s/ghcr.io\/kkgo-software-engineering\/workshop-summer-<GROUP_NO>.*$/ghcr.io\/kkgo-software-engineering\/workshop-summer-<GROUP_NO>:${GITHUB_SHA}/" infra/gitops/dev/deployment.yaml
+                    git add infra/gitops/dev/deployment.yaml
                     git commit -m "[skip actions] 🤖 change dev docker image version to ${GITHUB_SHA}"
                     git pull --rebase
                     git push

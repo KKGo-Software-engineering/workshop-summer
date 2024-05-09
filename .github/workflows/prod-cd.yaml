@@ -42,8 +42,8 @@ jobs:
 
             -   name: change image tag
                 run: |
-                    sed -i -E "s/ghcr.io\/kkgo-software-engineering\/workshop-summer-<GROUP_NO>.*$/ghcr.io\/kkgo-software-engineering\/workshop-summer-<GROUP_NO>:${{ inputs.deploy-tag }}/" infra/gitops/prod/deployment.yml
-                    git add infra/gitops/prod/deployment.yml
+                    sed -i -E "s/ghcr.io\/kkgo-software-engineering\/workshop-summer-<GROUP_NO>.*$/ghcr.io\/kkgo-software-engineering\/workshop-summer-<GROUP_NO>:${{ inputs.deploy-tag }}/" infra/gitops/prod/deployment.yaml
+                    git add infra/gitops/prod/deployment.yaml
                     git commit -m "[skip actions] ship it to prod 🚀 with ${{ inputs.deploy-message }}"
                     git pull --rebase
                     git push
