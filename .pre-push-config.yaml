@@ -6,6 +6,6 @@ repos:
         name: run all backend integration tests
         entry: make test-it-docker
         language: system
-        pass_filenames: true
+        pass_filenames: false
         verbose: true
         fail_fast: true
