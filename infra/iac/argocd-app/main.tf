@@ -22,7 +22,7 @@ resource "argocd_application" "argocd_app" {
     project = "default"
 
     source {
-      repo_url        = "https://github.com/KKGo-Software-engineering/workshop-summer-${var.argo_apps[count.index]}"
+      repo_url        = "https://github.com/KKGo-Software-engineering/workshop-summer-${var.argo_apps[count.index]}-${var.batch_no}"
       path            = "infra/gitops/${terraform.workspace}"
       target_revision = "main"
     }
@@ -33,7 +33,7 @@ resource "argocd_application" "argocd_app" {
 
     sync_policy {
       automated {
-        prune     = true
+        prune     = false
         self_heal = true
       }
     }
