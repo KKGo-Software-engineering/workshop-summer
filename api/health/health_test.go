@@ -1,4 +1,4 @@
-package main
+package health
 
 import (
 	"database/sql"
@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestHealth(t *testing.T) {
+func TestHealthCheck(t *testing.T) {
 	req, _ := http.NewRequest(http.MethodGet, "/health", nil)
 	rec := httptest.NewRecorder()
 	e := echo.New()
@@ -19,7 +19,7 @@ func TestHealth(t *testing.T) {
 
 	db, _ := sql.Open("ramsql", "TestHealth")
 
-	err := Health(db)(c)
+	err := Check(db)(c)
 
 	assert.Nil(t, err)
 	assert.Equal(t, http.StatusOK, rec.Code)
