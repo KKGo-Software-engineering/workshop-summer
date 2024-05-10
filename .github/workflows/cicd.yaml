@@ -70,7 +70,7 @@ jobs:
         name: Build Image and Push to Registry
         runs-on: ubuntu-latest
         # Fixme: Add needs for sonarqube when it's ready
-        needs: [ unit-test, integration-test ]
+        needs: [ sonarqube ]
         steps:
             -   uses: actions/checkout@v4
             -   name: Setup SHA
