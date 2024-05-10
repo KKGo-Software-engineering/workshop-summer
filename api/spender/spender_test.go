@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/KKGo-Software-engineering/workshop-summer/config"
+	"github.com/KKGo-Software-engineering/workshop-summer/api/config"
 	"github.com/labstack/echo/v4"
 	"github.com/stretchr/testify/assert"
 )

@@ -9,9 +9,9 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/KKGo-Software-engineering/workshop-summer/api/config"
 	"github.com/KKGo-Software-engineering/workshop-summer/api/eslip"
 	"github.com/KKGo-Software-engineering/workshop-summer/api/spender"
-	"github.com/KKGo-Software-engineering/workshop-summer/config"
 	"github.com/KKGo-Software-engineering/workshop-summer/migration"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
