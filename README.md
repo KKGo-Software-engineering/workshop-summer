@@ -3,6 +3,7 @@
 - [Go summer workshop](#go-summer-workshop)
 	- [Pre-requisites](#pre-requisites)
 	- [Tools](#tools)
+    - [Workshop URL](#workshop-url)
 - [HongJot Diagram](#hongjot-diagram)
 	- [Infrastructure](#infrastructure)
 	- [Getting Started](#getting-started)
@@ -26,6 +27,23 @@
 - SonarQube - [https://sonarqube.werockstar.dev/](https://sonarqube.werockstar.dev/)
 - ArgoCD - [https://argocd.werockstar.dev/](https://argocd.werockstar.dev/)
 
+## Workshop URL
+- Health Check: `GET: api/v1/health`
+- Group 1
+	- Dev: [https://group-1-b1-dev.werockstar.dev/](https://group-1-b1-dev.werockstar.dev/)
+	- Prod: [https://group-1-b1-prod.werockstar.dev/](https://group-1-b1-prod.werockstar.dev/)
+- Group 2
+	- Dev: [https://group-2-b1-dev.werockstar.dev/](https://group-2-b1-dev.werockstar.dev/)
+	- Prod: [https://group-2-b1-prod.werockstar.dev/](https://group-2-b1-prod.werockstar.dev/)
+- Group 3
+	- Dev: [https://group-3-b1-dev.werockstar.dev/](https://group-3-b1-dev.werockstar.dev/)
+	- Prod: [https://group-3-b1-prod.werockstar.dev/](https://group-3-b1-prod.werockstar.dev/)
+- Group 4
+	- Dev: [https://group-4-b1-dev.werockstar.dev/](https://group-4-b1-dev.werockstar.dev/)
+	- Prod: [https://group-4-b1-prod.werockstar.dev/](https://group-4-b1-prod.werockstar.dev/)
+- Group 5
+	- Dev: [https://group-5-b1-dev.werockstar.dev/](https://group-5-b1-dev.werockstar.dev/)
+	- Prod: [https://group-5-b1-prod.werockstar.dev/](https://group-5-b1-prod.werockstar.dev/)
 
 # HongJot Diagram
 
@@ -120,13 +138,12 @@ We have created the infrastructure by using Terraform. The infrastructure consis
 - Observe analysis result on `SonarQube` dashboard
 
 ### Step 2: Create ArgoCD application
-
+- Go to ArgoCD dashboard [https://argocd.werockstar.dev/](https://argocd.werockstar.dev/)
 - Setup GitOps สำหรับ Development
   - กด `+ New App` แล้วใส่ข้อมูลดังนี้
   - Application Name: `<GROUP_NO>-<BATCH_NO>-dev` (e.g. `group-1-b1-dev`)
   - Project Name: `default`
   - SYNC POLICY: `Automatic`
-  - ✅ PRUNE RESOURCES
   - Repository URL: `https://github.com/<your-github>/workshop-summer-<GROUP_NO>-<BATCH_NO>`
   - Revision: `main`
   - Path: `infra/gitops/dev`
@@ -138,7 +155,6 @@ We have created the infrastructure by using Terraform. The infrastructure consis
    - Application Name: `<GROUP_NO>-<BATCH_NO>-prod` (e.g. `group-1-b1-prod`)
    - Project Name: `default`
    - SYNC POLICY: `Automatic`
-   - ✅ PRUNE RESOURCES
    - Repository URL: `https://github.com/<your-github>/workshop-summer-<GROUP_NO>-<BATCH_NO>`
    - Revision: `main`
    - Path: `infra/gitops/prod`
