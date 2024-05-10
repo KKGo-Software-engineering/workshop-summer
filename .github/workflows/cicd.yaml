@@ -23,7 +23,7 @@ jobs:
                 uses: actions/upload-artifact@v4
                 with:
                     name: coverage
-                    path: coverage.out
+                    path: ./coverage.out
     integration-test:
         name: Integration Test
         runs-on: ubuntu-latest
@@ -45,7 +45,7 @@ jobs:
                 name: Download coverage file
                 with:
                     name: coverage
-                    path: coverage.out
+                    path: ./
             -   name: SonarQube Scan
                 uses: sonarsource/sonarqube-scan-action@master
                 env:
@@ -57,6 +57,8 @@ jobs:
                         -Dsonar.go.coverage.reportPaths=coverage.out
                         -Dsonar.language=go
                         -Dsonar.sources=.
+                        -Dsonar.tests=.
+                        -Dsonar.test.inclusions=**/*_test.go
                         -Dsonar.projectKey=${{ env.PROJECT_NAME }}
             -   uses: sonarsource/sonarqube-quality-gate-action@master
                 timeout-minutes: 5
