@@ -8,7 +8,7 @@ resource "aws_eks_node_group" "private-nodes" {
     aws_subnet.private-1b.id
   ]
 
-  capacity_type  = "SPOT"        # or ON_DEMAND
+  capacity_type  = "ON_DEMAND"   # or ON_DEMAND
   instance_types = ["t3.medium"] # or ["t3.medium"]
   disk_size      = 20
 
@@ -20,6 +20,10 @@ resource "aws_eks_node_group" "private-nodes" {
 
   update_config {
     max_unavailable = 1
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 
   depends_on = [
