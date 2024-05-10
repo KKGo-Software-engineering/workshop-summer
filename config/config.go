@@ -71,7 +71,7 @@ func parse(envPrefix string) (Config, error) {
 		return Config{}, errors.New("failed to parse feature flag config:" + err.Error())
 	}
 
-	port := Env("PORT")
+	port := Env("SERVER_PORT")
 	if port == "" {
 		port = "8080"
 	}
