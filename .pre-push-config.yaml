@@ -7,5 +7,6 @@ repos:
         entry: make test-it-docker
         language: system
         pass_filenames: false
+        always_run: true
         verbose: true
         fail_fast: true
