@@ -11,8 +11,6 @@ import (
 	"github.com/KKGo-Software-engineering/workshop-summer/api"
 	"github.com/KKGo-Software-engineering/workshop-summer/api/config"
 	"github.com/KKGo-Software-engineering/workshop-summer/migration"
-	"github.com/kkgo-software-engineering/workshop/mlog"
-	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
 	_ "github.com/lib/pq"
 	"go.uber.org/zap"
@@ -35,10 +33,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	e := api.New(db, cfg)
-
-	e.Use(middleware.Logger())
-	e.Use(mlog.Middleware(logger))
+	e := api.New(db, cfg, logger)
 
 	go func() { // comment here to simulate slow endpoint then Ctrl+C to stop the server
 		if err := e.Start(":" + cfg.Server.Port); err != nil && err != http.ErrServerClosed {

@@ -6,12 +6,22 @@ import (
 	"github.com/KKGo-Software-engineering/workshop-summer/api/config"
 	"github.com/KKGo-Software-engineering/workshop-summer/api/eslip"
 	"github.com/KKGo-Software-engineering/workshop-summer/api/health"
+	"github.com/KKGo-Software-engineering/workshop-summer/api/mlog"
 	"github.com/KKGo-Software-engineering/workshop-summer/api/spender"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+	"go.uber.org/zap"
 )
 
-func New(db *sql.DB, cfg config.Config) *echo.Echo {
+type Server struct {
+	*echo.Echo
+}
+
+func New(db *sql.DB, cfg config.Config, logger *zap.Logger) *Server {
 	e := echo.New()
+
+	e.Use(middleware.Logger())
+	e.Use(mlog.Middleware(logger))
 
 	v1 := e.Group("/api/v1")
 
@@ -25,5 +35,5 @@ func New(db *sql.DB, cfg config.Config) *echo.Echo {
 		v1.POST("/spenders", h.Create)
 	}
 
-	return e
+	return &Server{e}
 }
