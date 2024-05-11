@@ -148,9 +148,9 @@ Technical Requirements:
 ## Some hints to help the participants get started with the workshop.
 <details>
   <summary>Technical hints: อย่าพึ่งเปิดให้คิดเองก่อน</summary>
-1. GET /api/v1/transections
+1. GET /api/v1/transactions
 
-- Description: Retrieves a list of all transections.
+- Description: Retrieves a list of all transactions.
 - Response:
 - Status Code: 200 OK
 - Content Type: application/json
@@ -158,13 +158,14 @@ Technical Requirements:
 
 ```json
 {
-	"transections": [
+	"transactions": [
 		{
 			"id": 1,
 			"date": "2024-04-30T09:00:00.000Z",
 			"amount": 1000,
 			"category": "Food",
 			"transaction_type": "expense",
+			"spender_id": 1,
 			"note": "Lunch",
 			"image_url": "https://example.com/image1.jpg"
 		},
@@ -174,6 +175,7 @@ Technical Requirements:
 			"amount": 2000,
 			"category": "Transport",
 			"transaction_type": "income",
+			"spender_id": 1,
 			"note": "Salary",
 			"image_url": "https://example.com/image2.jpg"
 		}
@@ -181,9 +183,9 @@ Technical Requirements:
 }
 ```
 
-2. GET /api/v1/transections?page=1&limit=10&date=2024-04-30&amount=1000&category=Food&transaction_type=expense|income
+2. GET /api/v1/transactions?page=1&limit=10&date=2024-04-30&amount=1000&category=Food&transaction_type=expense|income
 
-- Description: Retrieves a list of all transections with pagging and filtering.
+- Description: Retrieves a list of all transactions with pagging and filtering.
 - Query Parameters:
 	- page: The page number to retrieve. Default is 1.
 	- limit: The number of items per page. Default is 10.
@@ -198,13 +200,14 @@ Technical Requirements:
 
 ```json
 {
-	"transections": [
+	"transactions": [
 		{
 			"id": 1,
 			"date": "2024-04-30T09:00:00.000Z",
 			"amount": 1000,
 			"category": "Food",
 			"transaction_type": "expense",
+			"spender_id": 1,
 			"note": "Lunch",
 			"image_url": "https://example.com/image1.jpg"
 		},
@@ -214,6 +217,7 @@ Technical Requirements:
 			"amount": 2000,
 			"category": "Transport",
 			"transaction_type": "income",
+			"spender_id": 1,
 			"note": "Salary",
 			"image_url": "https://example.com/image2.jpg"
 		}
@@ -231,7 +235,7 @@ Technical Requirements:
 }
 ```
 
-4. POST /api/v1/transections
+4. POST /api/v1/transactions
 
 - Description: Creates a new transection so that can record the income or expense.
 - Request Body:
@@ -244,6 +248,7 @@ Technical Requirements:
 	"amount": 1000,
 	"category": "Food",
 	"transaction_type": "expense",
+	"spender_id": 1,
 	"note": "Lunch",
 	"image_url": "https://example.com/image1.jpg"
 }
@@ -261,12 +266,13 @@ Technical Requirements:
 	"amount": 1000,
 	"category": "Food",
 	"transaction_type": "expense",
+	"spender_id": 1,
 	"note": "Lunch",
 	"image_url": "https://example.com/image1.jpg"
 }
 ```
 
-5. PUT /api/v1/transections/{id}
+5. PUT /api/v1/transactions/{id}
 
 - Description: Updates an existing transection so that can edit the income or expense.
 - Request Body:
@@ -279,6 +285,7 @@ Technical Requirements:
 	"amount": 1000,
 	"category": "Food",
 	"transaction_type": "expense",
+	"spender_id": 1,
 	"note": "Lunch",
 	"image_url": "https://example.com/image1.jpg"
 }
@@ -296,14 +303,15 @@ Technical Requirements:
 	"amount": 1000,
 	"category": "Food",
 	"transaction_type": "expense",
+	"spender_id": 1,
 	"note": "Lunch",
 	"image_url": "https://example.com/image1.jpg"
 }
 ```
 
-6. GET /api/v1/spenders/{id}/transections
+6. GET /api/v1/spenders/{id}/transactions
 
-- Description: Retrieves a list of all transections for a specific spender.
+- Description: Retrieves a list of all transactions for a specific spender.
 - Response:
 - Status Code: 200 OK
 - Content Type: application/json
@@ -311,13 +319,14 @@ Technical Requirements:
 
 ```json
 {
-	"transections": [
+	"transactions": [
 		{
 			"id": 1,
 			"date": "2024-04-30T09:00:00.000Z",
 			"amount": 1000,
 			"category": "Food",
 			"transaction_type": "expense",
+			"spender_id": 1,
 			"note": "Lunch",
 			"image_url": "https://example.com/image1.jpg"
 		},
@@ -327,6 +336,7 @@ Technical Requirements:
 			"amount": 2000,
 			"category": "Transport",
 			"transaction_type": "income",
+			"spender_id": 1,
 			"note": "Salary",
 			"image_url": "https://example.com/image2.jpg"
 		}
@@ -344,9 +354,9 @@ Technical Requirements:
 }
 ```
 
-7. GET /api/v1/spenders/{id}/transections/summary
+7. GET /api/v1/spenders/{id}/transactions/summary
 
-- Description: Retrieves a summary of all transections for a specific spender.
+- Description: Retrieves a summary of all transactions for a specific spender.
 - Response:
 - Status Code: 200 OK
 - Content Type: application/json
