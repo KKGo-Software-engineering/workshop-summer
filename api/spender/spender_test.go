@@ -171,12 +171,3 @@ func TestGetSpenderByID(t *testing.T) {
 		assert.JSONEq(t, `{"id": 1, "name": "HongJot", "email": "aa@bb.com"} `, rec.Body.String())
 	})
 }
-
-// Mock Repository
-// type StubSpender struct {
-// 	StubById Spender
-// }
-
-// func (s *StubSpender) GetByID(id int64) (Spender, error) {
-// 	return s.StubById, nil
-// }
