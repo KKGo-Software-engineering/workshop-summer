@@ -192,7 +192,7 @@ Technical Requirements:
 - Response:
 - Status Code: 200 OK
 - Content Type: application/json
-- Example Payload:
+- Example Response Body:
 
 ```json
 {
@@ -234,7 +234,7 @@ Technical Requirements:
 - Response:
 - Status Code: 200 OK
 - Content Type: application/json
-- Example Payload:
+- Example Response Body:
 
 ```json
 {
@@ -278,7 +278,7 @@ Technical Requirements:
 - Description: Creates a new transection so that can record the income or expense.
 - Request Body:
 - Content Type: application/json
-- Example Payload:
+- Example Response Body:
 
 ```json
 {
@@ -295,7 +295,7 @@ Technical Requirements:
 - Response:
 - Status Code: 201 Created
 - Content Type: application/json
-- Example Payload:
+- Example Response Body:
 
 ```json
 {
@@ -315,7 +315,7 @@ Technical Requirements:
 - Description: Updates an existing transection so that can edit the income or expense.
 - Request Body:
 - Content Type: application/json
-- Example Payload:
+- Example Response Body:
 
 ```json
 {
@@ -332,7 +332,7 @@ Technical Requirements:
 - Response:
 - Status Code: 200 OK
 - Content Type: application/json
-- Example Payload:
+- Example Response Body:
 
 ```json
 {
@@ -353,7 +353,7 @@ Technical Requirements:
 - Response:
 - Status Code: 200 OK
 - Content Type: application/json
-- Example Payload:
+- Example Response Body:
 
 ```json
 {
@@ -398,7 +398,7 @@ Technical Requirements:
 - Response:
 - Status Code: 200 OK
 - Content Type: application/json
-- Example Payload:
+- Example Response Body:
 
 ```json
 {
@@ -416,7 +416,7 @@ Technical Requirements:
 - Response:
 - Status Code: 200 OK
 - Content Type: application/json
-- Example Payload:
+- Example Response Body:
 
 ```json
 {
@@ -436,7 +436,7 @@ Technical Requirements:
 - Response:
 - Status Code: 200 OK
 - Content Type: application/json
-- Example Payload:
+- Example Response Body:
 
 ```json
 {
@@ -451,7 +451,7 @@ Technical Requirements:
 - Description: Creates a new spender.
 - Request Body:
 - Content Type: application/json
-- Example Payload:
+- Example Response Body:
 
 ```json
 {
@@ -463,7 +463,7 @@ Technical Requirements:
 - Response:
 - Status Code: 201 Created
 - Content Type: application/json
-- Example Payload:
+- Example Response Body:
 
 ```json
 {
