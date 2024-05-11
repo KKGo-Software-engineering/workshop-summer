@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS "transaction" (
   category VARCHAR(50) DEFAULT '',
   transaction_type VARCHAR(20) DEFAULT '',
   note VARCHAR(255) DEFAULT '',
-  image_url VARCHAR(255) DEFAULT ''
+  image_url VARCHAR(255) DEFAULT '',
+  spender_id INT
 );
 -- +goose StatementEnd
 

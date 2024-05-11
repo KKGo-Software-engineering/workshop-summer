@@ -166,7 +166,8 @@ Technical Requirements:
 			"category": "Food",
 			"transaction_type": "expense",
 			"note": "Lunch",
-			"image_url": "https://example.com/image1.jpg"
+			"image_url": "https://example.com/image1.jpg",
+			"spender_id": 1
 		},
 		{
 			"id": 2,
@@ -175,7 +176,8 @@ Technical Requirements:
 			"category": "Transport",
 			"transaction_type": "income",
 			"note": "Salary",
-			"image_url": "https://example.com/image2.jpg"
+			"image_url": "https://example.com/image2.jpg",
+			"spender_id": 1
 		}
 	]
 }
@@ -206,7 +208,8 @@ Technical Requirements:
 			"category": "Food",
 			"transaction_type": "expense",
 			"note": "Lunch",
-			"image_url": "https://example.com/image1.jpg"
+			"image_url": "https://example.com/image1.jpg",
+			"spender_id": 1
 		},
 		{
 			"id": 2,
@@ -215,7 +218,8 @@ Technical Requirements:
 			"category": "Transport",
 			"transaction_type": "income",
 			"note": "Salary",
-			"image_url": "https://example.com/image2.jpg"
+			"image_url": "https://example.com/image2.jpg",
+			"spender_id": 1
 		}
 	],
 	"summary": {
@@ -245,7 +249,8 @@ Technical Requirements:
 	"category": "Food",
 	"transaction_type": "expense",
 	"note": "Lunch",
-	"image_url": "https://example.com/image1.jpg"
+	"image_url": "https://example.com/image1.jpg",
+	"spender_id": 1
 }
 ```
 
@@ -262,7 +267,8 @@ Technical Requirements:
 	"category": "Food",
 	"transaction_type": "expense",
 	"note": "Lunch",
-	"image_url": "https://example.com/image1.jpg"
+	"image_url": "https://example.com/image1.jpg",
+	"spender_id": 1
 }
 ```
 
@@ -280,7 +286,8 @@ Technical Requirements:
 	"category": "Food",
 	"transaction_type": "expense",
 	"note": "Lunch",
-	"image_url": "https://example.com/image1.jpg"
+	"image_url": "https://example.com/image1.jpg",
+	"spender_id": 1
 }
 ```
 
@@ -297,7 +304,8 @@ Technical Requirements:
 	"category": "Food",
 	"transaction_type": "expense",
 	"note": "Lunch",
-	"image_url": "https://example.com/image1.jpg"
+	"image_url": "https://example.com/image1.jpg",
+	"spender_id": 1
 }
 ```
 
@@ -319,7 +327,8 @@ Technical Requirements:
 			"category": "Food",
 			"transaction_type": "expense",
 			"note": "Lunch",
-			"image_url": "https://example.com/image1.jpg"
+			"image_url": "https://example.com/image1.jpg",
+			"spender_id": 1
 		},
 		{
 			"id": 2,
@@ -328,7 +337,8 @@ Technical Requirements:
 			"category": "Transport",
 			"transaction_type": "income",
 			"note": "Salary",
-			"image_url": "https://example.com/image2.jpg"
+			"image_url": "https://example.com/image2.jpg",
+			"spender_id": 1
 		}
 	],
 	"summary": {
