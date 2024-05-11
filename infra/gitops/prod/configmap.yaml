@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
     name: app-config
-    namespace: <GROUP_NO>-prod
+    namespace: group-5-b1-prod
 data:
     server.port: "8080"
     enable.create.spender: "false"

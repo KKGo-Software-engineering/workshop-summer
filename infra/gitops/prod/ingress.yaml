@@ -2,19 +2,19 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-website
-  namespace: <GROUP_NO>-prod
+  namespace: group-5-b1-prod
   annotations:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
   ingressClassName: nginx
   rules:
-  - host: <GROUP_NO>-prod.werockstar.dev
+  - host: group-5-b1-prod.werockstar.dev
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: <GROUP_NO>-prod-service
+            name: group-5-b1-prod-service
             port:
               number: 80
