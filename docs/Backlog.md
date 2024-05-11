@@ -145,6 +145,44 @@ Technical Requirements:
 - should handle any error and response appropriate error message and status code.
 
 
+## Story 12: As a Spender, I want to delete an expense so that I can remove it from my records.
+
+Acceptance Criteria:
+- The spender can delete an expense.
+- The expense is removed from the database.
+- The spender receives a success message after the expense is deleted.
+
+Technical Requirements:
+- REST API to delete an expense.
+- Endpoint DELETE /expenses/{id} to delete an expense.
+- Response 200 OK with a success message.
+- should handle any error and response appropriate error message and status code.
+
+## Story 13: As a Spender, I want to view a expense by category so that I can see the expenses by category.
+
+Acceptance Criteria:
+- The spender can view a list of expenses by category.
+- The list should include the date, amount, and image URL of each expense.
+
+Technical Requirements:
+- REST API to get a list of expenses by category.
+- Endpoint GET /expenses/category/{category} to get a list of expenses by category.
+- Response 200 OK with the list of expenses by category.
+- should handle any error and response appropriate error message and status code.
+
+## Story 14: As a Spender, I want to view a expense by date so that I can see the expenses by date.
+
+Acceptance Criteria:
+- The spender can view a list of expenses by date.
+- The list should include the amount, category, and image URL of each expense.
+
+Technical Requirements:
+- REST API to get a list of expenses by date.
+- Endpoint GET /expenses/start/{startdate}/end/enddate to get a list of expenses by date.
+- Response 200 OK with the list of expenses by date.
+- should handle any error and response appropriate error message and status code.
+
+
 ## Some hints to help the participants get started with the workshop.
 <details>
   <summary>Technical hints: อย่าพึ่งเปิดให้คิดเองก่อน</summary>
@@ -435,6 +473,75 @@ Technical Requirements:
 }
 ```
 
+
+11. GET /api/v1/categorize
+
+- Description: Retrieves a list expense by category.
+
+- Response:
+- Status Code: 200 OK
+- Content Type: application/json
+- Example Payload:
+
+```json
+{
+	"Food": [
+		{
+			"id": 1,
+			"date": "2024-04-30T09:00:00.000Z",
+			"amount": 1000,
+			"category": "Food",
+			"transaction_type": "expense",
+			"note": "Lunch",
+			"image_url": "https://example.com/image1.jpg",
+			"spender_id": 1
+		}
+	],
+	"Transport": [
+		{
+			"id": 2,
+			"date": "2024-04-29T19:00:00.000Z",
+			"amount": 2000,
+			"category": "Transport",
+			"transaction_type": "income",
+			"note": "Salary",
+			"image_url": "https://example.com/image2.jpg",
+			"spender_id": 1
+		}
+	]
+	"Other": [
+		{
+			"id": 3,
+			"date": "2024-04-29T19:00:00.000Z",
+			"amount": 2000,
+			"category": "Other",
+			"transaction_type": "income",
+			"note": "Salary",
+			"image_url": "https://example.com/image2.jpg",
+			"spender_id": 1
+		}
+	]
+}
+```
+
+12. GET /api/v1/categories
+
+- Description: Retrieves a list of all categories.
+
+- Response:
+- Status Code: 200 OK
+- Content Type: application/json
+- Example Payload:
+
+```json
+{
+	"categories": [
+		"Food",
+		"Transport",
+		"Other"
+	]
+}
+```
 
 </details>
 
