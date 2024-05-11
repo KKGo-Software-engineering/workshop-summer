@@ -143,3 +143,40 @@ func TestGetAllSpender(t *testing.T) {
 		assert.Equal(t, http.StatusInternalServerError, rec.Code)
 	})
 }
+
+func TestGetSpenderByID(t *testing.T) {
+	t.Run("get spender by id succesfully", func(t *testing.T) {
+		e := echo.New()
+		defer e.Close()
+
+		req := httptest.NewRequest(http.MethodGet, "/", nil)
+		rec := httptest.NewRecorder()
+		c := e.NewContext(req, rec)
+		c.SetParamNames("id")
+		c.SetParamValues("1")
+
+		db, mock, _ := sqlmock.New(sqlmock.QueryMatcherOption(sqlmock.QueryMatcherEqual))
+		defer db.Close()
+
+		rows := sqlmock.NewRows([]string{"id", "name", "email"}).
+			AddRow(1, "HongJot", "aa@bb.com")
+		//https://stackoverflow.com/questions/57719304/how-to-correctly-set-mock-row-and-query-for-go-sqlmock
+		mock.ExpectQuery(`SELECT id, name, email FROM spender WHERE id = $1`).WithArgs("1").WillReturnRows(rows)
+
+		h := New(config.FeatureFlag{}, db)
+		err := h.GetByID(c)
+
+		assert.NoError(t, err)
+		assert.Equal(t, http.StatusOK, rec.Code)
+		assert.JSONEq(t, `{"id": 1, "name": "HongJot", "email": "aa@bb.com"} `, rec.Body.String())
+	})
+}
+
+// Mock Repository
+// type StubSpender struct {
+// 	StubById Spender
+// }
+
+// func (s *StubSpender) GetByID(id int64) (Spender, error) {
+// 	return s.StubById, nil
+// }

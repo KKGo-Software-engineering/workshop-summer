@@ -79,3 +79,18 @@ func (h handler) GetAll(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, sps)
 }
+
+func (h handler) GetByID(c echo.Context) error {
+	logger := mlog.L(c)
+	ctx := c.Request().Context()
+
+	id := c.Param("id")
+	var sp Spender
+	err := h.db.QueryRowContext(ctx, `SELECT id, name, email FROM spender WHERE id = $1`, id).Scan(&sp.ID, &sp.Name, &sp.Email)
+	if err != nil {
+		logger.Error("query row error", zap.Error(err))
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, sp)
+}
