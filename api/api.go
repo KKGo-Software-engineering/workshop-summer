@@ -3,7 +3,6 @@ package api
 import (
 	"database/sql"
 
-	"github.com/KKGo-Software-engineering/workshop-summer/api/auth"
 	"github.com/KKGo-Software-engineering/workshop-summer/api/config"
 	"github.com/KKGo-Software-engineering/workshop-summer/api/eslip"
 	"github.com/KKGo-Software-engineering/workshop-summer/api/health"
@@ -30,7 +29,7 @@ func New(db *sql.DB, cfg config.Config, logger *zap.Logger) *Server {
 	v1.GET("/health", health.Check(db))
 	v1.POST("/upload", eslip.Upload)
 
-	v1.Use(middleware.BasicAuth(auth.Middleware()))
+	v1.Use(middleware.BasicAuth(AuthCheck))
 
 	{
 		h := spender.New(cfg.FeatureFlag, db)
