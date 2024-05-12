@@ -17,7 +17,7 @@ import (
 )
 
 func TestCreateSpenderIT(t *testing.T) {
-	t.Run("create spender succesfully when feature toggle is enable", func(t *testing.T) {
+	t.Run("create spender successfully when feature toggle is enable", func(t *testing.T) {
 		sql, err := getTestDatabaseFromConfig()
 		if err != nil {
 			t.Error(err)
