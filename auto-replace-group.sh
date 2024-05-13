@@ -1,6 +1,6 @@
 #!/bin/bash
 
-read -p "Enter group number (ex. group-1-b1): " group_number
+read -p "Enter group number (ex. group-1-b2): " group_number
 
 group_pattern="<GROUP_NO>"
 

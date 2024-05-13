@@ -25,5 +25,5 @@ variable "subdomains" {
 variable "batch_no" {
   description = "Workshop batch number"
   type        = string
-  default     = "b1"
+  default     = "b2"
 }
