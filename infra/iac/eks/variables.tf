@@ -1,3 +1,15 @@
+variable "vpc_name" {
+  description = "The name of the VPC"
+  type        = string
+  default     = "go-workshop-vpc"
+}
+
+variable "nat_name" {
+  description = "The name of the NAT Gateway"
+  type        = string
+  default     = "go-workshop-nat"
+}
+
 variable "cluster_name" {
   description = "The name of the EKS cluster"
   type        = string

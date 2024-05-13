@@ -3,7 +3,7 @@ resource "aws_vpc" "workshop" {
 
   tags = {
     Cluster = var.cluster_name
-    Name    = "${var.cluster_name}-vpc"
+    Name    = var.vpc_name
   }
 
   enable_dns_support   = true

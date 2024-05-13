@@ -8,7 +8,7 @@ resource "aws_nat_gateway" "nat" {
 
   tags = {
     Cluster = var.cluster_name
-    Name    = "workshop-nat"
+    Name    = var.nat_name
   }
 
   depends_on = [aws_internet_gateway.igw]
