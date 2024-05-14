@@ -25,7 +25,6 @@ variable "eks_role" {
 variable "subdomains" {
   description = "List of subdomains"
   type        = list(string)
-  default     = ["group-0", "group-1", "group-2", "group-3", "group-4", "group-5"]
 }
 
 variable "batch_no" {
@@ -62,4 +61,29 @@ variable "cloudflare_api_token" {
   type        = string
   description = "Cloudflare API Token"
   sensitive   = true
+}
+
+variable "instance_type" {
+  description = "The instance type for the EKS nodes"
+  type        = string
+}
+
+variable "capacity_type" {
+  description = "The capacity type for the EKS nodes"
+  type        = string
+}
+
+variable "min_size" {
+  description = "The minimum size of the EKS nodes"
+  type        = number
+}
+
+variable "max_size" {
+  description = "The maximum size of the EKS nodes"
+  type        = number
+}
+
+variable "desired_size" {
+  description = "The desired size of the EKS nodes"
+  type        = number
 }
