@@ -85,10 +85,10 @@ resource "aws_instance" "sonarqube" {
 }
 
 resource "local_file" "ansible_inventory" {
-  content = templatefile("ansible/templates/sonarqube.ini", {
+  content = templatefile("${path.module}/ansible/templates/sonarqube.ini", {
     instance_ip = aws_instance.sonarqube.public_ip
   })
-  filename = "ansible/inventories/sonarqube.ini"
+  filename = "${path.module}/ansible/inventories/sonarqube.ini"
 }
 
 resource "cloudflare_record" "sonarqube" {

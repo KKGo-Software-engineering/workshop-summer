@@ -26,5 +26,5 @@ module "rds" {
 module "sonarqube" {
   source               = "./sonarqube"
   cloudflare_api_token = var.cf_api_token
-  instance_type        = var.instance_type
+  instance_type        = "t3.medium"
 }
