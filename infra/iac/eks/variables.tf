@@ -23,15 +23,15 @@ variable "eks_role" {
 }
 
 variable "subdomains" {
-	description = "List of subdomains"
-	type        = list(string)
-	default     = ["group-0", "group-1", "group-2", "group-3", "group-4", "group-5"]
+  description = "List of subdomains"
+  type        = list(string)
+  default     = ["group-0", "group-1", "group-2", "group-3", "group-4", "group-5"]
 }
 
 variable "batch_no" {
-	description = "Workshop batch number"
-	type        = string
-	default     = "b2"
+  description = "Workshop batch number"
+  type        = string
+  default     = "b2"
 }
 
 variable "eks_node_role" {
