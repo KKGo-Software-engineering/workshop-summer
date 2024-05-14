@@ -54,7 +54,7 @@ resource "helm_release" "nginx_ingress" {
   chart      = "ingress-nginx"
   version    = "v4.10.1"
 
-  values = [file("values/nginx.yaml")]
+  values = [file("${path.module}/values/nginx.yaml")]
 }
 
 resource "helm_release" "argocd" {
@@ -68,7 +68,7 @@ resource "helm_release" "argocd" {
   chart      = "argo-cd"
   version    = "6.7.17"
 
-  values = [file("values/argocd.yaml")]
+  values = [file("${path.module}/values/argocd.yaml")]
 
   depends_on = [helm_release.nginx_ingress]
 }
