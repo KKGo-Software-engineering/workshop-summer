@@ -116,6 +116,8 @@ No modules.
 | [aws_subnet.public-1b](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
 | [aws_vpc.workshop](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) | resource |
 | [cloudflare_record.argocd](https://registry.terraform.io/providers/cloudflare/cloudflare/4.31.0/docs/resources/record) | resource |
+| [cloudflare_record.cnames-dev](https://registry.terraform.io/providers/cloudflare/cloudflare/4.31.0/docs/resources/record) | resource |
+| [cloudflare_record.cnames-prod](https://registry.terraform.io/providers/cloudflare/cloudflare/4.31.0/docs/resources/record) | resource |
 | [helm_release.argocd](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 | [helm_release.nginx_ingress](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
 | [aws_eks_cluster.default](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster) | data source |
@@ -127,11 +129,15 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_argocd_namespace"></a> [argocd\_namespace](#input\_argocd\_namespace) | The namespace where ArgoCD is installed | `string` | `"argocd"` | no |
+| <a name="input_batch_no"></a> [batch\_no](#input\_batch\_no) | Workshop batch number | `string` | `"b2"` | no |
 | <a name="input_cloudflare_api_token"></a> [cloudflare\_api\_token](#input\_cloudflare\_api\_token) | Cloudflare API Token | `string` | n/a | yes |
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | The name of the EKS cluster | `string` | `"eks-go-workshop"` | no |
 | <a name="input_eks_node_role"></a> [eks\_node\_role](#input\_eks\_node\_role) | The IAM role for the EKS nodes | `string` | `"eks-nodes-role"` | no |
 | <a name="input_eks_role"></a> [eks\_role](#input\_eks\_role) | The IAM role for the EKS cluster | `string` | `"eks-go-workshop-role"` | no |
 | <a name="input_ingress_namespace"></a> [ingress\_namespace](#input\_ingress\_namespace) | The namespace where the Ingress Controller is installed | `string` | `"ingress-nginx"` | no |
+| <a name="input_nat_name"></a> [nat\_name](#input\_nat\_name) | The name of the NAT Gateway | `string` | `"go-workshop-nat"` | no |
+| <a name="input_subdomains"></a> [subdomains](#input\_subdomains) | List of subdomains | `list(string)` | <pre>[<br>  "group-0",<br>  "group-1",<br>  "group-2",<br>  "group-3",<br>  "group-4",<br>  "group-5"<br>]</pre> | no |
+| <a name="input_vpc_name"></a> [vpc\_name](#input\_vpc\_name) | The name of the VPC | `string` | `"go-workshop-vpc"` | no |
 | <a name="input_zone_id"></a> [zone\_id](#input\_zone\_id) | Cloudflare Zone ID | `string` | `"460c65b55ec2a251ab45cf8eedac4734"` | no |
 
 ## Outputs

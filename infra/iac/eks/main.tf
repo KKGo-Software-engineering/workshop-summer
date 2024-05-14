@@ -72,19 +72,3 @@ resource "helm_release" "argocd" {
 
   depends_on = [helm_release.nginx_ingress]
 }
-
-data "kubernetes_service" "service" {
-  metadata {
-    name      = "ingress-nginx-controller"
-    namespace = "ingress-nginx"
-  }
-  depends_on = [helm_release.argocd]
-}
-
-resource "cloudflare_record" "argocd" {
-  name    = "argocd"
-  value   = data.kubernetes_service.service.status[0].load_balancer[0].ingress[0].hostname
-  type    = "CNAME"
-  proxied = true
-  zone_id = var.zone_id
-}
