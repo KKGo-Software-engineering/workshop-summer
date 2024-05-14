@@ -73,7 +73,7 @@ resource "aws_security_group" "sonarqube-sg" {
 
 resource "aws_instance" "sonarqube" {
   ami                    = "ami-02a96df5f84f42942"
-  instance_type          = "t2.medium"
+  instance_type          = var.instance_type
   key_name               = aws_key_pair.deployer.key_name
   vpc_security_group_ids = [aws_security_group.sonarqube-sg.id]
   subnet_id              = aws_subnet.public-1a.id

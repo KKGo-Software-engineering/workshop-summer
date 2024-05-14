@@ -15,3 +15,8 @@ variable "instance_name" {
   description = "Name of the instance"
   default     = "sonarqube"
 }
+
+variable "instance_type" {
+  type        = string
+  description = "Instance type"
+}

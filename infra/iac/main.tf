@@ -22,3 +22,9 @@ module "rds" {
   db_username = var.rds_db_username
   db_name     = "workshop"
 }
+
+module "sonarqube" {
+  source               = "./sonarqube"
+  cloudflare_api_token = var.cf_api_token
+  instance_type        = var.instance_type
+}
