@@ -21,3 +21,21 @@ variable "workshop_batch_no" {
   type        = string
   default     = "b2"
 }
+
+variable "rds_db_password" {
+  type        = string
+  sensitive   = true
+  description = "password for db"
+}
+
+variable "rds_db_username" {
+  type        = string
+  description = "username for db"
+  sensitive   = true
+}
+
+variable "rds_db_name" {
+  type        = string
+  default     = "workshop"
+  description = "database name"
+}

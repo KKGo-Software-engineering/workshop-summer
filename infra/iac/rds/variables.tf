@@ -12,6 +12,5 @@ variable "db_username" {
 
 variable "db_name" {
   type        = string
-  default     = "workshop"
   description = "database name"
 }
