@@ -5,10 +5,10 @@ resource "aws_eks_cluster" "eks-cluster" {
 
   vpc_config {
     subnet_ids = [
-      aws_subnet.private-1a.id,
-      aws_subnet.private-1b.id,
-      aws_subnet.public-1a.id,
-      aws_subnet.public-1b.id
+      var.subnet_private-1a,
+      var.subnet_private-1b,
+      var.subnet_public-1a,
+      var.subnet_public-1b
     ]
   }
 
