@@ -30,20 +30,20 @@
 ## Workshop URL
 - Health Check: `GET: api/v1/health`
 - Group 1
-	- Dev: [https://group-1-b1-dev.werockstar.dev/](https://group-1-b1-dev.werockstar.dev/)
-	- Prod: [https://group-1-b1-prod.werockstar.dev/](https://group-1-b1-prod.werockstar.dev/)
+	- Dev: [https://group-1-b2-dev.werockstar.dev/](https://group-1-b2-dev.werockstar.dev/)
+	- Prod: [https://group-1-b2-prod.werockstar.dev/](https://group-1-b2-prod.werockstar.dev/)
 - Group 2
-	- Dev: [https://group-2-b1-dev.werockstar.dev/](https://group-2-b1-dev.werockstar.dev/)
-	- Prod: [https://group-2-b1-prod.werockstar.dev/](https://group-2-b1-prod.werockstar.dev/)
+	- Dev: [https://group-2-b2-dev.werockstar.dev/](https://group-2-b2-dev.werockstar.dev/)
+	- Prod: [https://group-2-b2-prod.werockstar.dev/](https://group-2-b2-prod.werockstar.dev/)
 - Group 3
-	- Dev: [https://group-3-b1-dev.werockstar.dev/](https://group-3-b1-dev.werockstar.dev/)
-	- Prod: [https://group-3-b1-prod.werockstar.dev/](https://group-3-b1-prod.werockstar.dev/)
+	- Dev: [https://group-3-b2-dev.werockstar.dev/](https://group-3-b2-dev.werockstar.dev/)
+	- Prod: [https://group-3-b2-prod.werockstar.dev/](https://group-3-b2-prod.werockstar.dev/)
 - Group 4
-	- Dev: [https://group-4-b1-dev.werockstar.dev/](https://group-4-b1-dev.werockstar.dev/)
-	- Prod: [https://group-4-b1-prod.werockstar.dev/](https://group-4-b1-prod.werockstar.dev/)
+	- Dev: [https://group-4-b2-dev.werockstar.dev/](https://group-4-b2-dev.werockstar.dev/)
+	- Prod: [https://group-4-b2-prod.werockstar.dev/](https://group-4-b2-prod.werockstar.dev/)
 - Group 5
-	- Dev: [https://group-5-b1-dev.werockstar.dev/](https://group-5-b1-dev.werockstar.dev/)
-	- Prod: [https://group-5-b1-prod.werockstar.dev/](https://group-5-b1-prod.werockstar.dev/)
+	- Dev: [https://group-5-b2-dev.werockstar.dev/](https://group-5-b2-dev.werockstar.dev/)
+	- Prod: [https://group-5-b2-prod.werockstar.dev/](https://group-5-b2-prod.werockstar.dev/)
 
 # HongJot Diagram
 
@@ -117,16 +117,16 @@ We have created the infrastructure by using Terraform. The infrastructure consis
 - Mapping DNS with `Cloudflare`
 	- We have created the DNS mapping for every group in the workshop such as:
 	- Dev
-		- `group-1-b1-dev`: `group-1-b1-dev.werockstar.dev`
+		- `group-1-b2-dev`: `group-1-b2-dev.werockstar.dev`
 	- Prod
-		- `group-1-b1-prod`: `group-1-b1-prod.werockstar.dev`
+		- `group-1-b2-prod`: `group-1-b2-prod.werockstar.dev`
 - Create `ArgoCD` application (No need to do anything because we have done it for demo purpose)
 	- ArgoCD will automatically deploy the application to the EKS cluster
 - Importantly, you need to destroy the infrastructure after the workshop
 	- `terraform destroy` in each directory
 
 ### Step 1: Fork the repository and setup Github Actions ✅
-- Fork `workshop-summer` repository and name it as `workshop-summer-<GROUP_NO>-<BATCH_NO>` (e.g. `workshop-summer-group-1-b1`)
+- Fork `workshop-summer` repository and name it as `workshop-summer-<GROUP_NO>-<BATCH_NO>` (e.g. `workshop-summer-group-1-b2`)
 - Enable Github Actions in the repository
 - Replace the `<GROUP_NO>` pattern via `auto-replace-group.sh`
 - Setup project on `SonarQube` manually
@@ -141,7 +141,7 @@ We have created the infrastructure by using Terraform. The infrastructure consis
 - Go to ArgoCD dashboard [https://argocd.werockstar.dev/](https://argocd.werockstar.dev/)
 - Setup GitOps สำหรับ Development
   - กด `+ New App` แล้วใส่ข้อมูลดังนี้
-  - Application Name: `<GROUP_NO>-<BATCH_NO>-dev` (e.g. `group-1-b1-dev`)
+  - Application Name: `<GROUP_NO>-<BATCH_NO>-dev` (e.g. `group-1-b2-dev`)
   - Project Name: `default`
   - SYNC POLICY: `Automatic`
   - Repository URL: `https://github.com/<your-github>/workshop-summer-<GROUP_NO>-<BATCH_NO>`
@@ -152,7 +152,7 @@ We have created the infrastructure by using Terraform. The infrastructure consis
   - ภาวะณา
 - Setup GitOps สำหรับ Production env
    - กด `+ New App` แล้วใส่ข้อมูลดังนี้
-   - Application Name: `<GROUP_NO>-<BATCH_NO>-prod` (e.g. `group-1-b1-prod`)
+   - Application Name: `<GROUP_NO>-<BATCH_NO>-prod` (e.g. `group-1-b2-prod`)
    - Project Name: `default`
    - SYNC POLICY: `Automatic`
    - Repository URL: `https://github.com/<your-github>/workshop-summer-<GROUP_NO>-<BATCH_NO>`
