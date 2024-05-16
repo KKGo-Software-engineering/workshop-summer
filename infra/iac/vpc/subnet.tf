@@ -20,9 +20,20 @@ resource "aws_subnet" "private-1b" {
   }
 }
 
+resource "aws_subnet" "private-1c" {
+  vpc_id            = aws_vpc.vpc.id
+  cidr_block        = "10.0.3.0/24"
+  availability_zone = "ap-southeast-1c"
+
+  tags = {
+    Cluster = var.cluster_name
+    Name    = "workshop-private-1c"
+  }
+}
+
 resource "aws_subnet" "public-1a" {
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = "10.0.3.0/24"
+  cidr_block              = "10.0.4.0/24"
   availability_zone       = "ap-southeast-1a"
   map_public_ip_on_launch = true
 
@@ -34,12 +45,24 @@ resource "aws_subnet" "public-1a" {
 
 resource "aws_subnet" "public-1b" {
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = "10.0.4.0/24"
+  cidr_block              = "10.0.5.0/24"
   availability_zone       = "ap-southeast-1b"
   map_public_ip_on_launch = true
 
   tags = {
     Cluster = var.cluster_name
     Name    = "workshop-public-1b"
+  }
+}
+
+resource "aws_subnet" "public-1c" {
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = "10.0.6.0/24"
+  availability_zone       = "ap-southeast-1c"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Cluster = var.cluster_name
+    Name    = "workshop-public-1c"
   }
 }

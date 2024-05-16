@@ -4,7 +4,8 @@ resource "aws_eks_node_group" "private-nodes" {
   node_role_arn   = aws_iam_role.nodes.arn
   subnet_ids = [
     var.subnet_private-1b,
-    var.subnet_private-1b
+    var.subnet_private-1b,
+    var.subnet_private-1c,
   ]
 
   capacity_type  = var.capacity_type

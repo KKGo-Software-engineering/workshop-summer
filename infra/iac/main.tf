@@ -26,16 +26,22 @@ module "eks" {
   nat_id               = module.vpc.nat_id
   subnet_private-1a    = module.vpc.subnet_private-1a
   subnet_private-1b    = module.vpc.subnet_private-1b
+  subnet_private-1c    = module.vpc.subnet_private-1c
   subnet_public-1a     = module.vpc.subnet_public-1a
   subnet_public-1b     = module.vpc.subnet_public-1b
+  subnet_public-1c     = module.vpc.subnet_public-1c
 }
 
 module "rds" {
-  source      = "./rds"
-  db_password = var.rds_db_password
-  db_username = var.rds_db_username
-  db_name     = "workshop"
-  vpc_id      = module.vpc.vpc_id
+  source               = "./rds"
+  db_password          = var.rds_db_password
+  db_username          = var.rds_db_username
+  db_name              = "workshop"
+  rds_vpc_id           = module.vpc.vpc_id
+  rds_subnet_public-1a = module.vpc.subnet_public-1a
+  rds_subnet_public-1b = module.vpc.subnet_public-1b
+  rds_subnet_public-1c = module.vpc.subnet_public-1c
+  publicly_accessible  = true // DON'T DO THIS IN PRODUCTION
 }
 
 module "sonarqube" {
