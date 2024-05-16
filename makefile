@@ -1,24 +1,24 @@
-PHONY: setup-pre-commit
+.PHONY: setup-pre-commit
 setup-pre-commit:
 	@echo "Setting up pre-commit..."
 	./scripts/setup-pre-commit.sh
 
-PHONY: test
+.PHONY: test
 test:
 	@echo "Running tests..."
 	go test -v ./...
 
-PHONY: test-it
+.PHONY: test-it
 test-it:
 	@echo "Running integration tests..."
 	go test -v -run "Test.*IT" -tags=integration ./...
 
-PHONY: test-it-docker
+.PHONY: test-it-docker
 test-it-docker:
 	docker-compose -f docker-compose.it.test.yaml down && \
 	docker-compose -f docker-compose.it.test.yaml up --build --force-recreate --abort-on-container-exit --exit-code-from it_tests
 
-PHONY: upload
+.PHONY: upload
 upload:
 	@echo "Uploading images..."
 	curl -X POST http://localhost:8080/api/v1/upload \
