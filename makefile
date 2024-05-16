@@ -18,6 +18,12 @@ test-it-docker:
 	docker-compose -f docker-compose.it.test.yaml down && \
 	docker-compose -f docker-compose.it.test.yaml up --build --force-recreate --abort-on-container-exit --exit-code-from it_tests
 
+.PHONY: new-migration
+new-migration:
+	@echo $(name) | grep -E '^[0-9]{2}_[a-z_]+$' > /dev/null || (echo "Invalid name format. Should be 0X_name_with_underscore" && exit 1)
+	@echo "Creating a new migration $(name)..."
+	@cp ./migration/00_example.sql.template ./migration/$(name).sql
+
 .PHONY: upload
 upload:
 	@echo "Uploading images..."

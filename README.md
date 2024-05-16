@@ -3,7 +3,7 @@
 - [Go summer workshop](#go-summer-workshop)
 	- [Pre-requisites](#pre-requisites)
 	- [Tools](#tools)
-    - [Workshop URL](#workshop-url)
+	- [Workshop URL](#workshop-url)
 - [HongJot Diagram](#hongjot-diagram)
 	- [Infrastructure](#infrastructure)
 	- [Getting Started](#getting-started)
@@ -254,7 +254,17 @@ make setup-pre-commit
 ทีนี้เวลาเรา commit หรือ push มันก็จะไป run คำสั่งต่าง ๆ ที่จะดักปัญหาก่อนไม่ให้ CI/CD pipeline ของเราพังนั่นเอง
 
 ## 🗃️ ใช้งาน database migration
-Project นี้เราใช้ [goose](https://github.com/pressly/goose) เป็น database migration tool โดย database script จะเก็บไว้อยู่ที่ directory `migration` ตอนที่เราสร้าง script ใหม่ก็ให้เอามาไว้ที่ directory `migration` โดยตั้งชื่อเป็น `0X_<script_name_with_underscore>.sql` แล้วใส่ content ดังนี้
+Project นี้เราใช้ [goose](https://github.com/pressly/goose) เป็น database migration tool โดย database script จะเก็บไว้อยู่ที่ directory `migration`
+
+ตอนที่เราสร้าง script ใหม่ก็สามารถ run คำสั่ง
+
+```console
+make new-migration name=0X_name_with_underscore
+```
+
+หรือจะสร้างโดย copy file จาก template ชื่อ `00_example.sql.template` แล้วสร้าง file ใหม่โดยต้องตั้งชื่อเป็น `0X_<script_name_with_underscore>.sql` ก็ได้
+
+Migration file ใหม่ที่ได้จะอยู่ที่ directory `migration` ที่มีใส่ content ดังนี้
 
 ```sql
 -- +goose Up
@@ -267,6 +277,8 @@ SELECT 'up SQL query';
 SELECT 'down SQL query';
 -- +goose StatementEnd
 ```
+
+จากนั้นก็ทำการเขียน SQL statement ที่ต้องการ
 
 เวลาเรา run server ขึ้นมามันจะทำการ apply migration ให้อัตโนมัติ แต่ในส่วนของ integration test ต้องเขียน apply และ rollback ด้วย ประมาณนี้
 
