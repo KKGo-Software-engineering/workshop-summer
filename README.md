@@ -104,6 +104,7 @@ We have created the infrastructure by using Terraform. The infrastructure consis
 	- Waiting and enjoy your coffee
 - Importantly, you need to destroy resources because it's not free 💰
 	- `terraform destroy`
+- **Note**: You can see the [README.md](infra/iac/README.md) in the `infra` directory for more information
 
 ### Step 1: Fork the repository and setup Github Actions ✅
 - Fork `workshop-summer` repository and name it as `workshop-summer-<GROUP_NO>-<BATCH_NO>` (e.g. `workshop-summer-group-1-b2`)
