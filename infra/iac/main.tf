@@ -47,5 +47,6 @@ module "rds" {
 module "sonarqube" {
   source               = "./sonarqube"
   cloudflare_api_token = var.cf_api_token
+  zone_id              = var.cf_zone_id
   instance_type        = "t3.medium"
 }

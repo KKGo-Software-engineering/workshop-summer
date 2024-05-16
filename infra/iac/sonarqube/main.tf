@@ -50,8 +50,9 @@ resource "aws_internet_gateway" "sonarqube-igw" {
 }
 
 resource "aws_security_group" "sonarqube-sg" {
-  vpc_id = aws_vpc.sonarqube-vpc.id
-  name   = "${var.instance_name}-sg"
+  vpc_id      = aws_vpc.sonarqube-vpc.id
+  name        = "${var.instance_name}-sg"
+  description = "Allow all traffic to and from the instance"
   tags = {
     Name = "${var.instance_name}-sg"
   }
