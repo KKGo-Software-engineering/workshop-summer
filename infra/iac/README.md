@@ -37,6 +37,7 @@ No providers.
 | <a name="module_eks"></a> [eks](#module\_eks) | ./eks | n/a |
 | <a name="module_rds"></a> [rds](#module\_rds) | ./rds | n/a |
 | <a name="module_sonarqube"></a> [sonarqube](#module\_sonarqube) | ./sonarqube | n/a |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | ./vpc | n/a |
 
 ## Resources
 

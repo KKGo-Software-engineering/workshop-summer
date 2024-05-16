@@ -36,6 +36,5 @@ variable "rds_db_username" {
 
 variable "rds_db_name" {
   type        = string
-  default     = "workshop"
-  description = "database name"
+  description = "initial database name"
 }

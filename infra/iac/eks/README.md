@@ -80,9 +80,9 @@ data:
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.48.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.48.0 |
 | <a name="provider_cloudflare"></a> [cloudflare](#provider\_cloudflare) | 4.31.0 |
-| <a name="provider_helm"></a> [helm](#provider\_helm) | 2.13.1 |
+| <a name="provider_helm"></a> [helm](#provider\_helm) | ~> 2.13 |
 | <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.29.0 |
 
 ## Modules
@@ -93,7 +93,6 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [aws_eip.nat](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip) | resource |
 | [aws_eks_cluster.eks-cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster) | resource |
 | [aws_eks_node_group.private-nodes](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_node_group) | resource |
 | [aws_iam_role.eks_iam](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
@@ -102,19 +101,6 @@ No modules.
 | [aws_iam_role_policy_attachment.nodes-AmazonEC2ContainerRegistryReadOnly](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.nodes-AmazonEKSWorkerNodePolicy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_role_policy_attachment.nodes-AmazonEKS_CNI_Policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
-| [aws_internet_gateway.igw](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/internet_gateway) | resource |
-| [aws_nat_gateway.nat](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/nat_gateway) | resource |
-| [aws_route_table.private](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table) | resource |
-| [aws_route_table.public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table) | resource |
-| [aws_route_table_association.private-1a](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association) | resource |
-| [aws_route_table_association.private-1b](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association) | resource |
-| [aws_route_table_association.public-1a](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association) | resource |
-| [aws_route_table_association.public-1b](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association) | resource |
-| [aws_subnet.private-1a](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
-| [aws_subnet.private-1b](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
-| [aws_subnet.public-1a](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
-| [aws_subnet.public-1b](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet) | resource |
-| [aws_vpc.workshop](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) | resource |
 | [cloudflare_record.argocd](https://registry.terraform.io/providers/cloudflare/cloudflare/4.31.0/docs/resources/record) | resource |
 | [cloudflare_record.cnames-dev](https://registry.terraform.io/providers/cloudflare/cloudflare/4.31.0/docs/resources/record) | resource |
 | [cloudflare_record.cnames-prod](https://registry.terraform.io/providers/cloudflare/cloudflare/4.31.0/docs/resources/record) | resource |
@@ -130,14 +116,26 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_argocd_namespace"></a> [argocd\_namespace](#input\_argocd\_namespace) | The namespace where ArgoCD is installed | `string` | `"argocd"` | no |
 | <a name="input_batch_no"></a> [batch\_no](#input\_batch\_no) | Workshop batch number | `string` | `"b2"` | no |
+| <a name="input_capacity_type"></a> [capacity\_type](#input\_capacity\_type) | The capacity type for the EKS nodes | `string` | n/a | yes |
 | <a name="input_cloudflare_api_token"></a> [cloudflare\_api\_token](#input\_cloudflare\_api\_token) | Cloudflare API Token | `string` | n/a | yes |
-| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | The name of the EKS cluster | `string` | `"eks-go-workshop"` | no |
+| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | The name of the EKS cluster | `string` | n/a | yes |
+| <a name="input_desired_size"></a> [desired\_size](#input\_desired\_size) | The desired size of the EKS nodes | `number` | n/a | yes |
 | <a name="input_eks_node_role"></a> [eks\_node\_role](#input\_eks\_node\_role) | The IAM role for the EKS nodes | `string` | `"eks-nodes-role"` | no |
 | <a name="input_eks_role"></a> [eks\_role](#input\_eks\_role) | The IAM role for the EKS cluster | `string` | `"eks-go-workshop-role"` | no |
+| <a name="input_igw_id"></a> [igw\_id](#input\_igw\_id) | The ID of the Internet Gateway | `string` | n/a | yes |
 | <a name="input_ingress_namespace"></a> [ingress\_namespace](#input\_ingress\_namespace) | The namespace where the Ingress Controller is installed | `string` | `"ingress-nginx"` | no |
-| <a name="input_nat_name"></a> [nat\_name](#input\_nat\_name) | The name of the NAT Gateway | `string` | `"go-workshop-nat"` | no |
-| <a name="input_subdomains"></a> [subdomains](#input\_subdomains) | List of subdomains | `list(string)` | <pre>[<br>  "group-0",<br>  "group-1",<br>  "group-2",<br>  "group-3",<br>  "group-4",<br>  "group-5"<br>]</pre> | no |
-| <a name="input_vpc_name"></a> [vpc\_name](#input\_vpc\_name) | The name of the VPC | `string` | `"go-workshop-vpc"` | no |
+| <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | The instance type for the EKS nodes | `string` | n/a | yes |
+| <a name="input_max_size"></a> [max\_size](#input\_max\_size) | The maximum size of the EKS nodes | `number` | n/a | yes |
+| <a name="input_min_size"></a> [min\_size](#input\_min\_size) | The minimum size of the EKS nodes | `number` | n/a | yes |
+| <a name="input_nat_id"></a> [nat\_id](#input\_nat\_id) | ID of the NAT Gateway | `string` | n/a | yes |
+| <a name="input_subdomains"></a> [subdomains](#input\_subdomains) | List of subdomains | `list(string)` | n/a | yes |
+| <a name="input_subnet_private-1a"></a> [subnet\_private-1a](#input\_subnet\_private-1a) | ID of the private subnet in AZ 1a | `string` | n/a | yes |
+| <a name="input_subnet_private-1b"></a> [subnet\_private-1b](#input\_subnet\_private-1b) | ID of the private subnet in AZ 1b | `string` | n/a | yes |
+| <a name="input_subnet_private-1c"></a> [subnet\_private-1c](#input\_subnet\_private-1c) | ID of the private subnet in AZ 1c | `string` | n/a | yes |
+| <a name="input_subnet_public-1a"></a> [subnet\_public-1a](#input\_subnet\_public-1a) | ID of the public subnet in AZ 1a | `string` | n/a | yes |
+| <a name="input_subnet_public-1b"></a> [subnet\_public-1b](#input\_subnet\_public-1b) | ID of the public subnet in AZ 1b | `string` | n/a | yes |
+| <a name="input_subnet_public-1c"></a> [subnet\_public-1c](#input\_subnet\_public-1c) | ID of the public subnet in AZ 1c | `string` | n/a | yes |
+| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | ID of the VPC | `string` | n/a | yes |
 | <a name="input_zone_id"></a> [zone\_id](#input\_zone\_id) | Cloudflare Zone ID | `string` | `"460c65b55ec2a251ab45cf8eedac4734"` | no |
 
 ## Outputs

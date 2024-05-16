@@ -24,8 +24,8 @@ This module intended to create ArgoCD application for EKS cluster
 
 | Name | Version |
 |------|---------|
-| <a name="provider_argocd"></a> [argocd](#provider\_argocd) | 6.1.1 |
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.47.0 |
+| <a name="provider_argocd"></a> [argocd](#provider\_argocd) | >= 6.0.0, < 7.0.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
 
 ## Modules
 
@@ -47,6 +47,7 @@ No modules.
 | <a name="input_argocd_password"></a> [argocd\_password](#input\_argocd\_password) | ArgoCD password | `string` | n/a | yes |
 | <a name="input_argocd_server_addr"></a> [argocd\_server\_addr](#input\_argocd\_server\_addr) | ArgoCD server address | `string` | `"argocd.werockstar.dev:443"` | no |
 | <a name="input_argocd_username"></a> [argocd\_username](#input\_argocd\_username) | ArgoCD username | `string` | `"admin"` | no |
+| <a name="input_batch_no"></a> [batch\_no](#input\_batch\_no) | Workshop batch number | `string` | `"b2"` | no |
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | The name of the EKS cluster | `string` | `"eks-go-workshop"` | no |
 
 ## Outputs
