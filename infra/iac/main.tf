@@ -20,7 +20,7 @@ module "eks" {
   min_size             = 2
   subdomains           = var.cf_subdomains
   batch_no             = var.workshop_batch_no
-  capacity_type        = "SPOT"
+  capacity_type        = "ON_DEMAND"
   vpc_id               = module.vpc.vpc_id
   igw_id               = module.vpc.igw_id
   nat_id               = module.vpc.nat_id
