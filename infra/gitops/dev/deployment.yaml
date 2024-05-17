@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: <GROUP_NO>-dev-deployment
-  namespace: <GROUP_NO>-dev
+  name: group-2-b2-dev-deployment
+  namespace: group-2-b2-dev
 spec:
   selector:
     matchLabels:
@@ -14,8 +14,8 @@ spec:
         app: api
     spec:
       containers:
-        - name: workshop-summer-<GROUP_NO>
-          image: ghcr.io/kkgo-software-engineering/workshop-summer-<GROUP_NO>:a8704d65943f6596e13f8afaaf37d3c8989810fe
+        - name: workshop-summer-group-2-b2
+          image: ghcr.io/kkgo-software-engineering/workshop-summer-group-2-b2:a8704d65943f6596e13f8afaaf37d3c8989810fe
           imagePullPolicy: Always
           env:
               -  name: DATABASE_POSTGRES_URI

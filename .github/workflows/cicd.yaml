@@ -4,7 +4,7 @@ on:
     push:
         branches: [ main ]
 env:
-    PROJECT_NAME: workshop-summer-<GROUP_NO>
+    PROJECT_NAME: workshop-summer-group-2-b2
 
 jobs:
     unit-test:
@@ -87,7 +87,7 @@ jobs:
                 uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
                 with:
                     push: ${{ github.ref == 'refs/heads/main' }}
-                    tags: ghcr.io/kkgo-software-engineering/workshop-summer-<GROUP_NO>:${{ env.GITHUB_SHA }}
+                    tags: ghcr.io/kkgo-software-engineering/workshop-summer-group-2-b2:${{ env.GITHUB_SHA }}
 
             -   name: Image digest
                 run: echo ${{ steps.docker_build.outputs.digest }}
@@ -109,7 +109,7 @@ jobs:
             -   name: change image tag to deploy dev
                 if: ${{ github.ref == 'refs/heads/main' }}
                 run: |
-                    sed -i -E "s/ghcr.io\/kkgo-software-engineering\/workshop-summer-<GROUP_NO>.*$/ghcr.io\/kkgo-software-engineering\/workshop-summer-<GROUP_NO>:${GITHUB_SHA}/" infra/gitops/dev/deployment.yaml
+                    sed -i -E "s/ghcr.io\/kkgo-software-engineering\/workshop-summer-group-2-b2.*$/ghcr.io\/kkgo-software-engineering\/workshop-summer-group-2-b2:${GITHUB_SHA}/" infra/gitops/dev/deployment.yaml
                     git add infra/gitops/dev/deployment.yaml
                     git commit -m "[skip actions] 🤖 change dev docker image version to ${GITHUB_SHA}"
                     git pull --rebase

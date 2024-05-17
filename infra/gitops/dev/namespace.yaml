@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: <GROUP_NO>-dev
+  name: group-2-b2-dev
