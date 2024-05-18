@@ -4,6 +4,6 @@
 infra/iac/sonarqube/ansible/creds/*
 **/inventories/sonarqube.ini
 **/.infracost
-.env
+.env*
 **/plan.json
 **/tfplan.binary
