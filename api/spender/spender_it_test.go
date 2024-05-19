@@ -18,14 +18,11 @@ import (
 
 func TestCreateSpenderIT(t *testing.T) {
 	t.Run("create spender successfully when feature toggle is enable", func(t *testing.T) {
-		sql, err := getTestDatabaseFromConfig()
-		if err != nil {
-			t.Error(err)
-		}
-		migration.ApplyMigrations(sql)
-		defer migration.RollbackMigrations(sql)
+		conn := getTestDatabaseFromConfig(t)
+		migration.ApplyMigrations(conn)
+		defer migration.RollbackMigrations(conn)
 
-		h := New(config.FeatureFlag{EnableCreateSpender: true}, sql)
+		h := New(config.FeatureFlag{EnableCreateSpender: true}, conn)
 		e := echo.New()
 		defer e.Close()
 
@@ -45,14 +42,12 @@ func TestCreateSpenderIT(t *testing.T) {
 
 func TestGetAllSpenderIT(t *testing.T) {
 	t.Run("get all spender successfully", func(t *testing.T) {
-		sql, err := getTestDatabaseFromConfig()
-		if err != nil {
-			t.Error(err)
-		}
-		migration.ApplyMigrations(sql)
-		defer migration.RollbackMigrations(sql)
+		conn := getTestDatabaseFromConfig(t)
 
-		h := New(config.FeatureFlag{}, sql)
+		migration.ApplyMigrations(conn)
+		defer migration.RollbackMigrations(conn)
+
+		h := New(config.FeatureFlag{}, conn)
 		e := echo.New()
 		defer e.Close()
 
@@ -68,11 +63,13 @@ func TestGetAllSpenderIT(t *testing.T) {
 	})
 }
 
-func getTestDatabaseFromConfig() (*sql.DB, error) {
+func getTestDatabaseFromConfig(t *testing.T) *sql.DB {
 	cfg := config.Parse("DOCKER")
 	conn, err := sql.Open("postgres", cfg.PostgresURI())
 	if err != nil {
-		return nil, err
+		t.Error(err)
+		t.FailNow()
+		return nil
 	}
-	return conn, nil
+	return conn
 }
