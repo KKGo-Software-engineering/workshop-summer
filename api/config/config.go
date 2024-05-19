@@ -21,7 +21,7 @@ func (c Config) PostgresURI() string {
 }
 
 type Server struct {
-	Port string `env:"SERVER_PORT"`
+	Port string `env:"SERVER_PORT" envDefault:"3000"`
 }
 
 type Database struct {
@@ -61,31 +61,25 @@ func parse(envPrefix string) (Config, error) {
 		Prefix: prefix(envPrefix),
 	}
 
-	dbconf := &Database{}
-	if err := env.ParseWithOptions(dbconf, opts); err != nil {
+	dbconf := Database{}
+	if err := env.ParseWithOptions(&dbconf, opts); err != nil {
 		return Config{}, errors.New("failed to parse database config:" + err.Error())
 	}
 
-	feats := &FeatureFlag{}
-	if err := env.ParseWithOptions(feats, opts); err != nil {
+	feats := FeatureFlag{}
+	if err := env.ParseWithOptions(&feats, opts); err != nil {
 		return Config{}, errors.New("failed to parse feature flag config:" + err.Error())
 	}
 
-	port := Env("SERVER_PORT")
-	if port == "" {
-		port = "8080"
+	sev := Server{}
+	if err := env.ParseWithOptions(&sev, opts); err != nil {
+		return Config{}, errors.New("failed to parse server config:" + err.Error())
 	}
 
 	return Config{
-		Database: Database{
-			PostgresURI: dbconf.PostgresURI,
-		},
-		Server: Server{
-			Port: port,
-		},
-		FeatureFlag: FeatureFlag{
-			EnableCreateSpender: feats.EnableCreateSpender,
-		},
+		Database:    dbconf,
+		Server:      sev,
+		FeatureFlag: feats,
 	}, nil
 }
 
