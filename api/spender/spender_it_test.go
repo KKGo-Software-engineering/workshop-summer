@@ -70,9 +70,9 @@ func TestGetAllSpenderIT(t *testing.T) {
 
 func getTestDatabaseFromConfig() (*sql.DB, error) {
 	cfg := config.Parse("DOCKER")
-	sql, err := sql.Open("postgres", cfg.PostgresURI())
+	conn, err := sql.Open("postgres", cfg.PostgresURI())
 	if err != nil {
 		return nil, err
 	}
-	return sql, nil
+	return conn, nil
 }
